@@ -119,29 +119,55 @@ video {
 }
 
 .heroVideo {
-  position: relative;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
   width: 100%;
-  height: auto;
+  height: 100%;
   max-width: 100%;
   object-fit: contain;
   object-position: center center;
-  border-radius: 24px;
+  border-radius: 0;
   background: transparent;
   filter: none;
-  box-shadow: 0 44px 130px rgba(0, 0, 0, 0.42);
+  opacity: 0;
+  transition: opacity 0.85s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.heroVideo.isLoaded {
+  opacity: 1;
+}
+
+.heroPoster {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+  background: #000;
+  opacity: 1;
+  transition: opacity 0.85s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.heroPoster.isHidden {
+  opacity: 0;
 }
 
 .heroVideoStage {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   width: min(1600px, calc(100vw - 96px));
+  aspect-ratio: 16 / 9;
   margin: 30px auto 0;
   padding: 0;
+  overflow: hidden;
   border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
+  border-radius: 24px;
+  background: #000;
+  box-shadow: 0 44px 130px rgba(0, 0, 0, 0.42);
 }
 
 .videoShade {
