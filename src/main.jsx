@@ -2,8 +2,8 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
 
-const mediaUrl = (fileName) =>
-  `https://github.com/13687950156a-arch/ai-/releases/download/media-v1/${fileName}`;
+const siteAsset = (path) => `${import.meta.env.BASE_URL}${path}`;
+const mediaUrl = (fileName) => siteAsset(`media-lite/${fileName}`);
 
 const profile = {
   name: "有森",
@@ -30,13 +30,15 @@ const projectGroups = [
       {
         title: "LPL比赛",
         type: "Live Action Edit",
-        video: mediaUrl("live-lpl.mp4"),
+        video: mediaUrl("live-lpl-lite.mp4"),
+        poster: mediaUrl("live-lpl-lite.jpg"),
         posterTime: 38,
       },
       {
         title: "真人MV",
         type: "Music Video",
-        video: mediaUrl("live-mv.mp4"),
+        video: mediaUrl("live-mv-lite.mp4"),
+        poster: mediaUrl("live-mv-lite.jpg"),
         posterTime: 49,
       },
     ],
@@ -49,7 +51,8 @@ const projectGroups = [
       {
         title: "泡泡玛特 PV",
         type: "Cartoon IP Film",
-        video: mediaUrl("cartoon-popmart-pv.mp4"),
+        video: mediaUrl("cartoon-popmart-pv-lite.mp4"),
+        poster: mediaUrl("cartoon-popmart-pv-lite.jpg"),
         posterTime: 4,
       },
     ],
@@ -62,13 +65,15 @@ const projectGroups = [
       {
         title: "冥币时代 第一集",
         type: "Horror Episode",
-        video: mediaUrl("horror-mingbi-ep1.mp4"),
+        video: mediaUrl("horror-mingbi-ep1-lite.mp4"),
+        poster: mediaUrl("horror-mingbi-ep1-lite.jpg"),
         posterTime: 25,
       },
       {
         title: "诡异降临 第二集",
         type: "Horror Episode",
-        video: mediaUrl("horror-mingbi-ep2.mp4"),
+        video: mediaUrl("horror-mingbi-ep2-lite.mp4"),
+        poster: mediaUrl("horror-mingbi-ep2-lite.jpg"),
         posterTime: 51,
       },
     ],
@@ -81,25 +86,29 @@ const projectGroups = [
       {
         title: "剑仙女友 第一集",
         type: "Comic Drama Episode",
-        video: mediaUrl("comic-jianxian-ep1.mp4"),
+        video: mediaUrl("comic-jianxian-ep1-lite.mp4"),
+        poster: mediaUrl("comic-jianxian-ep1-lite.jpg"),
         posterTime: 21,
       },
       {
         title: "剑仙女友 第二集",
         type: "Comic Drama Episode",
-        video: mediaUrl("comic-jianxian-ep2.mp4"),
+        video: mediaUrl("comic-jianxian-ep2-lite.mp4"),
+        poster: mediaUrl("comic-jianxian-ep2-lite.jpg"),
         posterTime: 4,
       },
       {
         title: "剑仙女友 第三集",
         type: "Comic Drama Preview",
-        video: mediaUrl("comic-jianxian-ep3-preview.mp4"),
+        video: mediaUrl("comic-jianxian-ep3-preview-lite.mp4"),
+        poster: mediaUrl("comic-jianxian-ep3-preview-lite.jpg"),
         posterTime: 16,
       },
       {
         title: "火龙飞",
         type: "Comic Drama Short",
-        video: mediaUrl("comic-huolongfei-19s.mp4"),
+        video: mediaUrl("comic-huolongfei-19s-lite.mp4"),
+        poster: mediaUrl("comic-huolongfei-19s-lite.jpg"),
       },
     ],
   },
@@ -274,6 +283,23 @@ function PortfolioMotion() {
 
 function App() {
   const [activeProject, setActiveProject] = React.useState("LPL比赛");
+  const [modalProject, setModalProject] = React.useState(null);
+
+  React.useEffect(() => {
+    if (!modalProject) return undefined;
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") setModalProject(null);
+    };
+
+    document.body.classList.add("hasVideoModal");
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.classList.remove("hasVideoModal");
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [modalProject]);
 
   return (
     <main>
@@ -307,8 +333,16 @@ function App() {
           </div>
 
           <div className="heroVideoStage">
-            <video className="heroVideo" autoPlay muted loop playsInline>
-              <source src={mediaUrl("hero-video.mp4")} type="video/mp4" />
+            <video
+              className="heroVideo"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              poster={mediaUrl("hero-video-lite.jpg")}
+            >
+              <source src={mediaUrl("hero-video-lite.mp4")} type="video/mp4" />
             </video>
           </div>
 
@@ -375,7 +409,7 @@ function App() {
 
           <div className="experienceVisual motionCard imageReveal">
             <div className="experienceVisualMeta">体验策略 / 视觉系统 / AI 产品落地</div>
-            <img className="revealImage" src="/media/avatar-yousen.jpg" alt="有森头像" />
+            <img className="revealImage" src={siteAsset("media/avatar-yousen.jpg")} alt="有森头像" />
             <div className="experienceCopyright">Copyright 2026 © 有森</div>
           </div>
         </div>
@@ -420,43 +454,18 @@ function App() {
                       }`}
                       key={project.title}
                       onClick={() => {
-                        if (project.video) setActiveProject(project.title);
+                        if (project.video) {
+                          setActiveProject(project.title);
+                          setModalProject(project);
+                        }
                       }}
                     >
                       {project.video ? (
-                        <video
-                          className="revealImage projectVideo"
-                          src={project.video}
-                          controls
-                          preload="metadata"
-                          playsInline
-                          onLoadedMetadata={(event) => {
-                            const video = event.currentTarget;
-                            const { videoWidth, videoHeight } = video;
-                            if (videoWidth && videoHeight) {
-                              video.parentElement?.style.setProperty(
-                                "--media-ratio",
-                                `${videoWidth} / ${videoHeight}`,
-                              );
-                            }
-                            if (project.posterTime != null && !video.dataset.coverFrameReady) {
-                              video.dataset.coverFrameReady = "true";
-                              video.dataset.coverFrameTime = String(project.posterTime);
-                              video.currentTime = project.posterTime;
-                            }
-                          }}
-                          onPlay={(event) => {
-                            const video = event.currentTarget;
-                            const coverFrameTime = Number(video.dataset.coverFrameTime);
-                            if (
-                              video.dataset.coverFrameReady === "true" &&
-                              Number.isFinite(coverFrameTime) &&
-                              Math.abs(video.currentTime - coverFrameTime) < 0.75
-                            ) {
-                              video.dataset.coverFrameReady = "played";
-                              video.currentTime = 0;
-                            }
-                          }}
+                        <img
+                          className="revealImage projectPoster"
+                          src={project.poster}
+                          alt={project.title}
+                          loading="lazy"
                         />
                       ) : (
                         <img className="revealImage" src={project.image} alt={project.title} />
@@ -508,6 +517,38 @@ function App() {
           </a>
         </div>
       </section>
+
+      {modalProject ? (
+        <div
+          className="videoModal"
+          role="dialog"
+          aria-modal="true"
+          aria-label={modalProject.title}
+          onClick={() => setModalProject(null)}
+        >
+          <button
+            className="videoModalClose"
+            type="button"
+            aria-label="Close video"
+            onClick={() => setModalProject(null)}
+          >
+            Close
+          </button>
+          <div className="videoModalInner" onClick={(event) => event.stopPropagation()}>
+            <video
+              className="videoModalPlayer"
+              src={modalProject.video}
+              controls
+              autoPlay
+              playsInline
+            />
+            <div className="videoModalCaption">
+              <span>{modalProject.type}</span>
+              <strong>{modalProject.title}</strong>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </main>
   );
 }
