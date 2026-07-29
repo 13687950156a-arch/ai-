@@ -213,7 +213,6 @@ function PortfolioMotion() {
               {
                 y: 70,
                 autoAlpha: 0,
-                scale: 0.96,
                 clipPath: "inset(14% 0 14% 0 round 24px)",
                 duration: 1.35,
               },
