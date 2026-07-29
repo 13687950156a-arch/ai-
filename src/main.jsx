@@ -2,8 +2,14 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
 
-const siteAsset = (path) => `${import.meta.env.BASE_URL}${path}`;
-const mediaUrl = (fileName) => siteAsset(`media-lite/${fileName}`);
+const isLocalPreview =
+  window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost";
+const assetBase = isLocalPreview ? "/" : import.meta.env.BASE_URL;
+const siteAsset = (path) => `${assetBase}${path}`;
+const posterUrl = (fileName) => siteAsset(`posters/${fileName}`);
+const ossMediaBaseUrl = "https://yousen-ai-portfolio.oss-cn-hangzhou.aliyuncs.com/videos/";
+const releaseMediaUrl = (fileName) =>
+  `${ossMediaBaseUrl}${fileName}`;
 
 const profile = {
   name: "有森",
@@ -30,15 +36,15 @@ const projectGroups = [
       {
         title: "LPL比赛",
         type: "Live Action Edit",
-        video: mediaUrl("live-lpl-lite.mp4"),
-        poster: mediaUrl("live-lpl-lite.jpg"),
+        video: releaseMediaUrl("live-lpl.mp4"),
+        poster: posterUrl("live-lpl-lite.jpg"),
         posterTime: 38,
       },
       {
         title: "真人MV",
         type: "Music Video",
-        video: mediaUrl("live-mv-lite.mp4"),
-        poster: mediaUrl("live-mv-lite.jpg"),
+        video: releaseMediaUrl("live-mv.mp4"),
+        poster: posterUrl("live-mv-lite.jpg"),
         posterTime: 49,
       },
     ],
@@ -51,8 +57,8 @@ const projectGroups = [
       {
         title: "泡泡玛特 PV",
         type: "Cartoon IP Film",
-        video: mediaUrl("cartoon-popmart-pv-lite.mp4"),
-        poster: mediaUrl("cartoon-popmart-pv-lite.jpg"),
+        video: releaseMediaUrl("cartoon-popmart-pv.mp4"),
+        poster: posterUrl("cartoon-popmart-pv-lite.jpg"),
         posterTime: 4,
       },
     ],
@@ -65,15 +71,15 @@ const projectGroups = [
       {
         title: "冥币时代 第一集",
         type: "Horror Episode",
-        video: mediaUrl("horror-mingbi-ep1-lite.mp4"),
-        poster: mediaUrl("horror-mingbi-ep1-lite.jpg"),
+        video: releaseMediaUrl("horror-mingbi-ep1.mp4"),
+        poster: posterUrl("horror-mingbi-ep1-lite.jpg"),
         posterTime: 25,
       },
       {
         title: "诡异降临 第二集",
         type: "Horror Episode",
-        video: mediaUrl("horror-mingbi-ep2-lite.mp4"),
-        poster: mediaUrl("horror-mingbi-ep2-lite.jpg"),
+        video: releaseMediaUrl("horror-mingbi-ep2.mp4"),
+        poster: posterUrl("horror-mingbi-ep2-lite.jpg"),
         posterTime: 51,
       },
     ],
@@ -86,29 +92,29 @@ const projectGroups = [
       {
         title: "剑仙女友 第一集",
         type: "Comic Drama Episode",
-        video: mediaUrl("comic-jianxian-ep1-lite.mp4"),
-        poster: mediaUrl("comic-jianxian-ep1-lite.jpg"),
+        video: releaseMediaUrl("comic-jianxian-ep1.mp4"),
+        poster: posterUrl("comic-jianxian-ep1-lite.jpg"),
         posterTime: 21,
       },
       {
         title: "剑仙女友 第二集",
         type: "Comic Drama Episode",
-        video: mediaUrl("comic-jianxian-ep2-lite.mp4"),
-        poster: mediaUrl("comic-jianxian-ep2-lite.jpg"),
+        video: releaseMediaUrl("comic-jianxian-ep2.mp4"),
+        poster: posterUrl("comic-jianxian-ep2-lite.jpg"),
         posterTime: 4,
       },
       {
         title: "剑仙女友 第三集",
         type: "Comic Drama Preview",
-        video: mediaUrl("comic-jianxian-ep3-preview-lite.mp4"),
-        poster: mediaUrl("comic-jianxian-ep3-preview-lite.jpg"),
+        video: releaseMediaUrl("comic-jianxian-ep3-preview.mp4"),
+        poster: posterUrl("comic-jianxian-ep3-preview-lite.jpg"),
         posterTime: 16,
       },
       {
         title: "火龙飞",
         type: "Comic Drama Short",
-        video: mediaUrl("comic-huolongfei-19s-lite.mp4"),
-        poster: mediaUrl("comic-huolongfei-19s-lite.jpg"),
+        video: releaseMediaUrl("comic-huolongfei-19s.mp4"),
+        poster: posterUrl("comic-huolongfei-19s-lite.jpg"),
       },
     ],
   },
@@ -133,7 +139,12 @@ const strengths = [
   },
 ];
 
-const heroCategories = ["真人", "卡通 IP", "恐怖", "漫剧"];
+const heroCategories = [
+  { name: "真人", target: "live-action" },
+  { name: "卡通 IP", target: "cartoon-ip" },
+  { name: "恐怖", target: "horror" },
+  { name: "漫剧", target: "comic-drama" },
+];
 
 function CursorGlow() {
   React.useEffect(() => {
@@ -284,6 +295,26 @@ function PortfolioMotion() {
 function App() {
   const [activeProject, setActiveProject] = React.useState("LPL比赛");
   const [modalProject, setModalProject] = React.useState(null);
+  const [loadHeroVideo, setLoadHeroVideo] = React.useState(false);
+  const [heroVideoLoaded, setHeroVideoLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    let timer;
+    const loadVideo = () => {
+      timer = window.setTimeout(() => setLoadHeroVideo(true), 1600);
+    };
+
+    if (document.readyState === "complete") {
+      loadVideo();
+    } else {
+      window.addEventListener("load", loadVideo, { once: true });
+    }
+
+    return () => {
+      window.removeEventListener("load", loadVideo);
+      window.clearTimeout(timer);
+    };
+  }, []);
 
   React.useEffect(() => {
     if (!modalProject) return undefined;
@@ -333,17 +364,26 @@ function App() {
           </div>
 
           <div className="heroVideoStage">
-            <video
-              className="heroVideo"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-              poster={mediaUrl("hero-video-lite.jpg")}
-            >
-              <source src={mediaUrl("hero-video-lite.mp4")} type="video/mp4" />
-            </video>
+            <img
+              className={`heroPoster ${heroVideoLoaded ? "isHidden" : ""}`}
+              src={posterUrl("hero-video-lite.jpg")}
+              alt=""
+              fetchPriority="high"
+            />
+            {loadHeroVideo ? (
+              <video
+                className={`heroVideo ${heroVideoLoaded ? "isLoaded" : ""}`}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster={posterUrl("hero-video-lite.jpg")}
+                onCanPlay={() => setHeroVideoLoaded(true)}
+              >
+                <source src={releaseMediaUrl("hero-video.mp4")} type="video/mp4" />
+              </video>
+            ) : null}
           </div>
 
           <div className="heroStatement">
@@ -357,9 +397,13 @@ function App() {
 
           <div className="heroCategoryGrid" aria-label="作品类型">
             {heroCategories.map((item, index) => (
-              <a className="heroCategoryCard motionCard" href="#projects" key={item}>
+              <a
+                className="heroCategoryCard motionCard"
+                href={`#${item.target}`}
+                key={item.target}
+              >
                 <span>{String(index + 1).padStart(2, "0")}</span>
-                <strong>{item}</strong>
+                <strong>{item.name}</strong>
               </a>
             ))}
           </div>
@@ -439,6 +483,7 @@ function App() {
                     : ""
                 }`}
                 key={group.category}
+                id={heroCategories[groupIndex]?.target}
               >
                 <div className="projectModuleInfo">
                   <span>{String(groupIndex + 1).padStart(2, "0")}</span>
@@ -538,8 +583,10 @@ function App() {
             <video
               className="videoModalPlayer"
               src={modalProject.video}
+              poster={modalProject.poster}
               controls
               autoPlay
+              preload="metadata"
               playsInline
             />
             <div className="videoModalCaption">
