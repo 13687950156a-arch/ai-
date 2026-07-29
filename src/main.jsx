@@ -1,5 +1,6 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
+import BorderGlow from "./BorderGlow";
 import "./styles.css";
 
 const isLocalPreview =
@@ -10,6 +11,18 @@ const posterUrl = (fileName) => siteAsset(`posters/${fileName}`);
 const ossMediaBaseUrl = "https://yousen-ai-portfolio.oss-cn-hangzhou.aliyuncs.com/videos/";
 const releaseMediaUrl = (fileName) =>
   isLocalPreview ? siteAsset(`media/${fileName}`) : `${ossMediaBaseUrl}${fileName}`;
+
+const borderGlowTheme = {
+  edgeSensitivity: 30,
+  glowColor: "174 52 72",
+  backgroundColor: "#07100f",
+  glowRadius: 30,
+  glowIntensity: 0.88,
+  coneSpread: 24,
+  animated: false,
+  colors: ["#91d4c8", "#4ca1ce", "#d8f3ec"],
+  fillOpacity: 0.34,
+};
 
 const profile = {
   name: "有森",
@@ -434,14 +447,18 @@ function App() {
 
           <div className="heroCategoryGrid" aria-label="作品类型">
             {heroCategories.map((item, index) => (
-              <a
+              <BorderGlow
+                {...borderGlowTheme}
+                as="a"
                 className="heroCategoryCard motionCard"
                 href={`#${item.target}`}
                 key={item.target}
+                borderRadius={18}
+                glowRadius={24}
               >
                 <span>{String(index + 1).padStart(2, "0")}</span>
                 <strong>{item.name}</strong>
-              </a>
+              </BorderGlow>
             ))}
           </div>
         </div>
@@ -449,7 +466,14 @@ function App() {
 
       <section className="experience section motionSection" id="experience">
         <div className="shell experienceShowcase">
-          <div className="experienceInfo motionCard">
+          <BorderGlow
+            {...borderGlowTheme}
+            as="article"
+            className="experienceInfo motionCard"
+            backgroundColor="#050505"
+            borderRadius="30px 8px 8px 30px"
+            glowRadius={38}
+          >
             <div className="experienceTopline">
               <span>●○ Lucky 2026</span>
               <span>{profile.email}</span>
@@ -486,13 +510,20 @@ function App() {
             </div>
 
             <div className="experienceFootnote">Case 2024 - 2026</div>
-          </div>
+          </BorderGlow>
 
-          <div className="experienceVisual motionCard imageReveal">
+          <BorderGlow
+            {...borderGlowTheme}
+            as="article"
+            className="experienceVisual motionCard imageReveal"
+            backgroundColor="#070505"
+            borderRadius="8px 30px 30px 8px"
+            glowRadius={38}
+          >
             <div className="experienceVisualMeta">体验策略 / 视觉系统 / AI 产品落地</div>
             <img className="revealImage" src={siteAsset("media/avatar-yousen.jpg")} alt="有森头像" />
             <div className="experienceCopyright">Copyright 2026 © 有森</div>
-          </div>
+          </BorderGlow>
         </div>
       </section>
 
@@ -507,7 +538,9 @@ function App() {
           </div>
           <div className="projectStack">
             {projectGroups.map((group, groupIndex) => (
-              <section
+              <BorderGlow
+                {...borderGlowTheme}
+                as="section"
                 className={`projectModule motionCard ${
                   group.works.some((project) => project.video) ? "projectModuleVideo" : ""
                 } ${
@@ -521,6 +554,8 @@ function App() {
                 }`}
                 key={group.category}
                 id={heroCategories[groupIndex]?.target}
+                borderRadius={28}
+                glowRadius={36}
               >
                 <div className="projectModuleInfo">
                   <span>{String(groupIndex + 1).padStart(2, "0")}</span>
@@ -530,11 +565,16 @@ function App() {
                 </div>
                 <div className="projectModuleWorks">
                   {group.works.map((project) => (
-                    <article
+                    <BorderGlow
+                      {...borderGlowTheme}
+                      as="article"
                       className={`projectCard imageReveal ${
                         project.video && activeProject === project.title ? "isActive" : ""
                       }`}
                       key={project.title}
+                      backgroundColor="#0a0d0c"
+                      borderRadius={20}
+                      glowRadius={26}
                       onClick={() => {
                         if (project.video) {
                           setActiveProject(project.title);
@@ -556,10 +596,10 @@ function App() {
                         <span>{project.type}</span>
                         <h3>{project.title}</h3>
                       </div>
-                    </article>
+                    </BorderGlow>
                   ))}
                 </div>
-              </section>
+              </BorderGlow>
             ))}
           </div>
         </div>
@@ -578,18 +618,32 @@ function App() {
 
           <div className="strengthGrid">
             {strengths.map((item) => (
-              <article className="strengthCard motionCard" key={item.title}>
+              <BorderGlow
+                {...borderGlowTheme}
+                as="article"
+                className="strengthCard motionCard"
+                key={item.title}
+                backgroundColor="#101210"
+                borderRadius={22}
+                glowRadius={26}
+              >
                 <div className="iconBox" />
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
-              </article>
+              </BorderGlow>
             ))}
           </div>
         </div>
       </section>
 
       <section className="contactSection motionSection" id="contact">
-        <div className="shell contactInner motionCard">
+        <BorderGlow
+          {...borderGlowTheme}
+          className="shell contactInner motionCard"
+          backgroundColor="#050a0c"
+          borderRadius={28}
+          glowRadius={40}
+        >
           <span className="sectionLabel">CONTACT</span>
           <div className="motionTitle">CONTACT</div>
           <h2>Let’s build the next intelligent experience.</h2>
@@ -597,7 +651,7 @@ function App() {
           <a className="primaryAction" href={`mailto:${profile.email}`}>
             {profile.email}
           </a>
-        </div>
+        </BorderGlow>
       </section>
 
       {modalProject ? (

@@ -517,22 +517,9 @@ video {
   transform: none !important;
 }
 
-.heroCategoryCard::before {
-  content: none;
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  background: linear-gradient(135deg, rgba(243, 240, 232, 0.12), transparent 46%);
-  transition: opacity 0.45s ease;
-}
-
 .heroCategoryCard:hover {
   transform: translateY(-6px);
   border-color: rgba(243, 240, 232, 0.34);
-}
-
-.heroCategoryCard:hover::before {
-  opacity: 0;
 }
 
 .heroCategoryCard span,
@@ -711,10 +698,12 @@ video {
     #050505;
 }
 
-.experienceInfo::before {
+.experienceInfo > .border-glow-inner::before {
   content: "";
   position: absolute;
   inset: 45% 0 0;
+  z-index: 0;
+  pointer-events: none;
   opacity: 0.18;
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
@@ -858,7 +847,7 @@ video {
     #070505;
 }
 
-.experienceVisual::before {
+.experienceVisual > .border-glow-inner::before {
   content: "AI";
   position: absolute;
   inset: 8% 0 auto 0;
@@ -1393,7 +1382,7 @@ video {
   object-fit: contain;
 }
 
-.projectCard:has(.projectPoster)::after {
+.projectCard > .border-glow-inner:has(.projectPoster)::after {
   content: "CLICK TO PLAY";
   position: absolute;
   right: 22px;
@@ -1784,3 +1773,129 @@ video {
 }
 .heroVideoStage,.heroCategoryGrid{width:min(1700px,calc(100vw - 96px));}.heroVideoStage{height:auto;aspect-ratio:1103 / 473;}@media(max-width:900px){.heroVideoStage,.heroCategoryGrid{width:calc(100vw - 32px);}}
 @media(max-width:900px){.heroVideoStage{align-self:center;margin-left:0;margin-right:0;}}
+
+/* React Bits BorderGlow: keep the original layout inside the interactive glow shell. */
+.border-glow-card > .border-glow-inner {
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.heroCategoryCard.border-glow-card {
+  display: block;
+  min-height: 128px;
+  padding: 0;
+  overflow: visible;
+  border-radius: var(--border-radius);
+  background: var(--card-bg);
+}
+
+.heroCategoryCard.border-glow-card > .border-glow-inner {
+  min-height: inherit;
+  padding: 24px;
+  justify-content: space-between;
+}
+
+.experienceInfo.border-glow-card,
+.experienceVisual.border-glow-card {
+  display: block;
+  padding: 0;
+  overflow: visible;
+  border-radius: var(--border-radius);
+}
+
+.experienceInfo.border-glow-card > .border-glow-inner {
+  min-height: 720px;
+  padding: 58px 72px;
+  justify-content: center;
+}
+
+.experienceVisual.border-glow-card > .border-glow-inner {
+  min-height: 720px;
+}
+
+.projectModule.border-glow-card {
+  display: block;
+  padding: 0;
+  overflow: visible;
+  border-radius: var(--border-radius);
+}
+
+.projectModule.border-glow-card > .border-glow-inner {
+  display: grid;
+  grid-template-columns: 0.42fr 1fr;
+  gap: 18px;
+  min-height: 420px;
+  padding: 18px;
+}
+
+.projectModuleVideo.border-glow-card > .border-glow-inner {
+  grid-template-columns: 0.32fr 1fr;
+}
+
+.projectModuleVideoStack.border-glow-card > .border-glow-inner {
+  min-height: 900px;
+}
+
+.projectCard.border-glow-card,
+.projectModuleVideo .projectCard.border-glow-card {
+  display: block;
+  overflow: visible;
+  border-radius: var(--border-radius);
+}
+
+.projectCard.border-glow-card > .border-glow-inner {
+  display: block;
+  min-height: inherit;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.strengthCard.border-glow-card {
+  display: block;
+  min-height: 310px;
+  padding: 0;
+  overflow: visible;
+  border-radius: var(--border-radius);
+}
+
+.strengthCard.border-glow-card > .border-glow-inner {
+  min-height: inherit;
+  padding: 30px;
+  justify-content: flex-start;
+}
+
+.contactInner.border-glow-card {
+  padding: 0;
+  overflow: visible;
+  border-radius: var(--border-radius);
+}
+
+.contactInner.border-glow-card > .border-glow-inner {
+  padding: 96px;
+}
+
+@media (max-width: 900px) {
+  .heroCategoryCard.border-glow-card {
+    min-height: 104px;
+  }
+
+  .heroCategoryCard.border-glow-card > .border-glow-inner {
+    padding: 18px;
+  }
+
+  .experienceInfo.border-glow-card > .border-glow-inner,
+  .experienceVisual.border-glow-card > .border-glow-inner {
+    min-height: 520px;
+  }
+
+  .projectModule.border-glow-card > .border-glow-inner,
+  .projectModuleVideo.border-glow-card > .border-glow-inner,
+  .projectModuleVideoStack.border-glow-card > .border-glow-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .contactInner.border-glow-card > .border-glow-inner {
+    padding: 48px 28px;
+  }
+}
