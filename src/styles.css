@@ -1780,3 +1780,4 @@ video {
   }
 }
 .heroVideoStage,.heroCategoryGrid{width:min(1700px,calc(100vw - 96px));}.heroVideoStage{height:auto;aspect-ratio:1103 / 473;}@media(max-width:900px){.heroVideoStage,.heroCategoryGrid{width:calc(100vw - 32px);}}
+@media(max-width:900px){.heroVideoStage{align-self:center;margin-left:0;margin-right:0;}}
