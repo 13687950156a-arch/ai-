@@ -200,8 +200,8 @@ video {
   align-items: center;
   justify-content: center;
   width: min(1700px, calc(100vw - 96px));
-  height: min(440px, 42dvh);
-  aspect-ratio: auto;
+  height: auto;
+  aspect-ratio: 1103 / 473;
   margin: 24px auto 0;
   padding: 0;
   overflow: hidden;
@@ -1660,9 +1660,9 @@ video {
   }
 
   .heroVideoStage {
-    width: min(1600px, calc(100vw - 96px));
-    height: 260px;
-    aspect-ratio: auto;
+    width: min(1700px, calc(100vw - 96px));
+    height: auto;
+    aspect-ratio: 1103 / 473;
     margin-top: 8px;
   }
 
