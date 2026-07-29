@@ -488,7 +488,7 @@ video {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
-  width: min(1600px, calc(100vw - 96px));
+  width: min(1700px, calc(100vw - 96px));
   margin-top: 28px;
 }
 
@@ -1715,6 +1715,9 @@ video {
     margin-top: 16px;
     height: auto;
     aspect-ratio: 1103 / 473;
+    align-self: center;
+    margin-left: 0;
+    margin-right: 0;
     border-radius: 14px;
   }
 
