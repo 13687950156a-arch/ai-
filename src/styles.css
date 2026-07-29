@@ -1510,10 +1510,15 @@ video {
 }
 
 @media (max-height: 1300px) and (min-width: 901px) {
+  .hero {
+    min-height: auto;
+    overflow: visible;
+  }
+
   .heroInner {
     min-height: auto;
     padding-top: 96px;
-    padding-bottom: 36px;
+    padding-bottom: 84px;
   }
 
   .heroTitleBlock {
