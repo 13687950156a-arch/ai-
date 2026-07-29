@@ -299,6 +299,19 @@ function App() {
   const [heroVideoLoaded, setHeroVideoLoaded] = React.useState(false);
 
   React.useEffect(() => {
+    if (window.location.hash) return undefined;
+
+    const previousScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+    const frame = window.requestAnimationFrame(() => window.scrollTo(0, 0));
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.history.scrollRestoration = previousScrollRestoration;
+    };
+  }, []);
+
+  React.useEffect(() => {
     let timer;
     const loadVideo = () => {
       timer = window.setTimeout(() => setLoadHeroVideo(true), 1600);
