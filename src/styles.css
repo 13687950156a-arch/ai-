@@ -21,7 +21,6 @@ html {
 body {
   position: relative;
   margin: 0;
-  min-width: 1180px;
   overflow-x: hidden;
   background: #000;
 }
@@ -1510,7 +1509,7 @@ video {
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 900px) {
   .shell,
   .heroVideoStage,
   .heroStatement,
