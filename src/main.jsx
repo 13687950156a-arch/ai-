@@ -303,10 +303,19 @@ function App() {
 
     const previousScrollRestoration = window.history.scrollRestoration;
     window.history.scrollRestoration = "manual";
-    const frame = window.requestAnimationFrame(() => window.scrollTo(0, 0));
+    let delayedReset;
+    const resetScroll = () => {
+      window.scrollTo(0, 0);
+      delayedReset = window.setTimeout(() => window.scrollTo(0, 0), 120);
+    };
+
+    const frame = window.requestAnimationFrame(resetScroll);
+    window.addEventListener("pageshow", resetScroll);
 
     return () => {
       window.cancelAnimationFrame(frame);
+      window.clearTimeout(delayedReset);
+      window.removeEventListener("pageshow", resetScroll);
       window.history.scrollRestoration = previousScrollRestoration;
     };
   }, []);
