@@ -1644,6 +1644,41 @@ video {
   }
 }
 
+@media (max-height: 800px) and (min-width: 901px) {
+  .heroInner {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .heroTitleBlock {
+    margin-bottom: 8px;
+  }
+
+  .hero h1 {
+    font-size: 48px;
+  }
+
+  .heroVideoStage {
+    width: min(1600px, calc(100vw - 96px));
+    height: 260px;
+    aspect-ratio: auto;
+    margin-top: 8px;
+  }
+
+  .heroStatement {
+    margin-top: 12px;
+  }
+
+  .heroCategoryGrid {
+    margin-top: 8px;
+  }
+
+  .heroCategoryCard {
+    min-height: 124px;
+    padding: 20px;
+  }
+}
+
 @media (max-width: 900px) {
   :root {
     --site-header-height: 62px;
