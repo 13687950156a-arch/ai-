@@ -4,12 +4,12 @@ import "./styles.css";
 
 const isLocalPreview =
   window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost";
-const assetBase = isLocalPreview ? "/" : import.meta.env.BASE_URL;
+const assetBase = import.meta.env.BASE_URL;
 const siteAsset = (path) => `${assetBase}${path}`;
 const posterUrl = (fileName) => siteAsset(`posters/${fileName}`);
 const ossMediaBaseUrl = "https://yousen-ai-portfolio.oss-cn-hangzhou.aliyuncs.com/videos/";
 const releaseMediaUrl = (fileName) =>
-  `${ossMediaBaseUrl}${fileName}`;
+  isLocalPreview ? siteAsset(`media/${fileName}`) : `${ossMediaBaseUrl}${fileName}`;
 
 const profile = {
   name: "有森",
