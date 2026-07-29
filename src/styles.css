@@ -199,8 +199,9 @@ video {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: min(1600px, calc(100vw - 96px), max(680px, calc(233dvh - 1220px)));
-  aspect-ratio: 1103 / 473;
+  width: min(1700px, calc(100vw - 96px));
+  height: min(440px, 42dvh);
+  aspect-ratio: auto;
   margin: 24px auto 0;
   padding: 0;
   overflow: hidden;
@@ -1712,6 +1713,8 @@ video {
 
   .heroVideoStage {
     margin-top: 16px;
+    height: auto;
+    aspect-ratio: 1103 / 473;
     border-radius: 14px;
   }
 
