@@ -1,3 +1,6 @@
+Exit code: 0
+Wall time: 4.1 seconds
+Output:
 :root {
   --cursor-x: 50vw;
   --cursor-y: 50vh;
@@ -203,6 +206,26 @@ video {
   height: 52px;
   padding: 0;
   transform: translateX(-50%);
+  transition:
+    background 0.28s ease,
+    border-color 0.28s ease,
+    box-shadow 0.28s ease,
+    padding 0.28s ease;
+}
+
+.nav.isPinned {
+  position: fixed;
+  top: 16px;
+  z-index: 90;
+  height: 60px;
+  padding: 0 12px;
+  border: 1px solid rgba(243, 240, 232, 0.16);
+  border-radius: 18px;
+  background: rgba(8, 12, 12, 0.72);
+  backdrop-filter: blur(22px) saturate(145%);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .brand,
@@ -252,12 +275,11 @@ video {
   min-width: 82px;
   height: 30px;
   border-radius: 999px;
-}
-
-.navLinks a:hover,
-.contactBtn:hover {
-  color: #f3f0e8;
-  background: transparent;
+  transition:
+    background 0.22s ease,
+    color 0.22s ease,
+    box-shadow 0.22s ease,
+    transform 0.22s ease;
 }
 
 .contactBtn {
@@ -273,6 +295,11 @@ video {
   color: #080908;
   font-size: 14px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  transition:
+    background 0.22s ease,
+    color 0.22s ease,
+    box-shadow 0.22s ease,
+    transform 0.22s ease;
 }
 
 .heroInner {
@@ -401,6 +428,38 @@ video {
   font-size: 14px;
   font-weight: 650;
   backdrop-filter: blur(10px);
+  transition:
+    background 0.22s ease,
+    border-color 0.22s ease,
+    color 0.22s ease,
+    box-shadow 0.22s ease,
+    transform 0.22s ease;
+}
+
+.navLinks a:hover {
+  background: #91d4c8;
+  color: #081110;
+  box-shadow: 0 8px 20px rgba(145, 212, 200, 0.2);
+  transform: translateY(-1px);
+}
+
+.contactBtn:hover,
+.heroContactBar a:hover {
+  background: #91d4c8;
+  color: #081110;
+  box-shadow: 0 14px 30px rgba(145, 212, 200, 0.24);
+  transform: translateY(-1px);
+}
+
+.heroContactBar a:hover {
+  border-color: #91d4c8;
+}
+
+.navLinks a:focus-visible,
+.contactBtn:focus-visible,
+.heroContactBar a:focus-visible {
+  outline: 2px solid #91d4c8;
+  outline-offset: 3px;
 }
 
 .heroCategoryGrid {
@@ -427,6 +486,13 @@ video {
     inset 0 1px 0 rgba(255, 255, 255, 0.06);
   text-align: left;
   transition: transform 0.45s ease, border-color 0.45s ease, background 0.45s ease;
+}
+
+/* Keep all four category frames fully visible on first render. */
+.heroCategoryCard {
+  clip-path: none !important;
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 .heroCategoryCard::before {
@@ -1517,12 +1583,21 @@ video {
 
   .heroInner {
     min-height: auto;
-    padding-top: 96px;
-    padding-bottom: 84px;
+    padding-top: 112px;
+    padding-right: 0;
+    padding-bottom: 56px;
+    padding-left: 0;
   }
 
   .heroTitleBlock {
-    display: none;
+    display: flex;
+    margin-bottom: 28px;
+  }
+
+  .hero h1 {
+    margin-top: 10px;
+    font-size: 52px;
+    line-height: 1;
   }
 
   .heroVideoStage {
@@ -1541,6 +1616,7 @@ video {
   }
 
   .heroStatement {
+    width: min(1700px, calc(100vw - 96px));
     margin-top: 18px;
   }
 
@@ -1561,6 +1637,13 @@ video {
   .nav {
     top: 16px;
     width: calc(100vw - 32px);
+  }
+
+  .nav.isPinned {
+    top: 12px;
+    height: 44px;
+    padding: 0 12px;
+    border-radius: 14px;
   }
 
   .brand {
@@ -1645,44 +1728,3 @@ video {
   }
 }
 
-
-/* Desktop first-screen layout: keep all four category cards visible. */
-@media (max-height: 1300px) and (min-width: 901px) {
-  .hero { min-height: auto; overflow: visible; }
-  .heroInner { min-height: auto; padding-top: 78px; padding-bottom: 40px; }
-  .heroTitleBlock { display: none; }
-  .heroVideoStage {
-    width: min(1700px, calc(100vw - 96px));
-    height: auto;
-    aspect-ratio: 16 / 5;
-    margin-top: 0;
-    border: 1px solid rgba(243, 240, 232, 0.16);
-    border-radius: 24px;
-  }
-  .heroVideo, .heroPoster { object-fit: cover; border-radius: inherit; }
-  .heroStatement { margin-top: 18px; }
-  .heroCategoryGrid { width: min(1700px, calc(100vw - 96px)); margin-top: 14px; }
-  .heroCategoryCard { clip-path: none !important; opacity: 1 !important; transform: none !important; }
-}
-
-
-/* Full desktop composition: retain the complete video and show all categories. */
-@media (max-height: 1300px) and (min-width: 901px) {
-  .heroInner { padding-top: 78px; padding-bottom: 40px; }
-  .heroTitleBlock { display: flex; }
-  .hero h1 { margin-top: 10px; font-size: 42px; line-height: 1; }
-  .heroVideoStage { width: min(980px, calc(100vw - 96px)); aspect-ratio: 1103 / 473; }
-  .heroStatement { width: min(980px, calc(100vw - 96px)); margin-top: 18px; }
-  .heroCategoryGrid { width: min(980px, calc(100vw - 96px)); margin-top: 14px; }
-}
-
-
-/* Unified desktop hero: align with the content panels below. */
-@media (max-height: 1300px) and (min-width: 901px) {
-  .heroInner { padding: 112px 0 56px; }
-  .heroTitleBlock { margin-bottom: 28px; }
-  .hero h1 { margin-top: 10px; font-size: 52px; line-height: 1; }
-  .heroVideoStage { width: min(1700px, calc(100vw - 96px)); aspect-ratio: 1103 / 473; }
-  .heroStatement { width: min(1700px, calc(100vw - 96px)); }
-  .heroCategoryGrid { width: min(1700px, calc(100vw - 96px)); }
-}
