@@ -1675,3 +1675,14 @@ video {
   .heroStatement { width: min(980px, calc(100vw - 96px)); margin-top: 18px; }
   .heroCategoryGrid { width: min(980px, calc(100vw - 96px)); margin-top: 14px; }
 }
+
+
+/* Unified desktop hero: align with the content panels below. */
+@media (max-height: 1300px) and (min-width: 901px) {
+  .heroInner { padding: 112px 0 56px; }
+  .heroTitleBlock { margin-bottom: 28px; }
+  .hero h1 { margin-top: 10px; font-size: 52px; line-height: 1; }
+  .heroVideoStage { width: min(1700px, calc(100vw - 96px)); aspect-ratio: 1103 / 473; }
+  .heroStatement { width: min(1700px, calc(100vw - 96px)); }
+  .heroCategoryGrid { width: min(1700px, calc(100vw - 96px)); }
+}
