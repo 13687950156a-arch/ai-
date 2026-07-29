@@ -1,3 +1,6 @@
+Exit code: 0
+Wall time: 4.1 seconds
+Output:
 import React from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
@@ -12,36 +15,36 @@ const releaseMediaUrl = (fileName) =>
   isLocalPreview ? siteAsset(`media/${fileName}`) : `${ossMediaBaseUrl}${fileName}`;
 
 const profile = {
-  name: "有森",
+  name: "鏈夋．",
   intro:
-    "我专注于 AI 产品体验、生成式视觉系统与人机协作流程设计，把复杂模型能力转译成清晰、可信、可落地的用户体验。",
+    "鎴戜笓娉ㄤ簬 AI 浜у搧浣撻獙銆佺敓鎴愬紡瑙嗚绯荤粺涓庝汉鏈哄崗浣滄祦绋嬭璁★紝鎶婂鏉傛ā鍨嬭兘鍔涜浆璇戞垚娓呮櫚銆佸彲淇°€佸彲钀藉湴鐨勭敤鎴蜂綋楠屻€?,
   email: "584761225@qq.com",
   phone: "13687950156",
-  location: "杭州",
+  location: "鏉窞",
 };
 
 const stats = [
-  { value: "12+", label: "AI 产品与概念项目" },
-  { value: "6", label: "端到端设计流程" },
-  { value: "3.8x", label: "原型迭代效率提升" },
-  { value: "24h", label: "快速验证周期" },
+  { value: "12+", label: "AI 浜у搧涓庢蹇甸」鐩? },
+  { value: "6", label: "绔埌绔璁℃祦绋? },
+  { value: "3.8x", label: "鍘熷瀷杩唬鏁堢巼鎻愬崌" },
+  { value: "24h", label: "蹇€熼獙璇佸懆鏈? },
 ];
 
 const projectGroups = [
   {
-    category: "真人",
+    category: "鐪熶汉",
     label: "Live Action",
-    desc: "真人影像、AI MV、虚实结合视觉与可控生成流程。",
+    desc: "鐪熶汉褰卞儚銆丄I MV銆佽櫄瀹炵粨鍚堣瑙変笌鍙帶鐢熸垚娴佺▼銆?,
     works: [
       {
-        title: "LPL比赛",
+        title: "LPL姣旇禌",
         type: "Live Action Edit",
         video: releaseMediaUrl("live-lpl.mp4"),
         poster: posterUrl("live-lpl-lite.jpg"),
         posterTime: 38,
       },
       {
-        title: "真人MV",
+        title: "鐪熶汉MV",
         type: "Music Video",
         video: releaseMediaUrl("live-mv.mp4"),
         poster: posterUrl("live-mv-lite.jpg"),
@@ -50,12 +53,12 @@ const projectGroups = [
     ],
   },
   {
-    category: "卡通 IP",
+    category: "鍗￠€?IP",
     label: "Cartoon IP",
-    desc: "角色设定、IP 世界观、表情动作延展与系列化视觉资产。",
+    desc: "瑙掕壊璁惧畾銆両P 涓栫晫瑙傘€佽〃鎯呭姩浣滃欢灞曚笌绯诲垪鍖栬瑙夎祫浜с€?,
     works: [
       {
-        title: "泡泡玛特 PV",
+        title: "娉℃场鐜涚壒 PV",
         type: "Cartoon IP Film",
         video: releaseMediaUrl("cartoon-popmart-pv.mp4"),
         poster: posterUrl("cartoon-popmart-pv-lite.jpg"),
@@ -64,19 +67,19 @@ const projectGroups = [
     ],
   },
   {
-    category: "恐怖",
+    category: "鎭愭€?,
     label: "Horror",
-    desc: "恐怖氛围、悬疑节奏、暗黑视觉与情绪化镜头语言。",
+    desc: "鎭愭€栨皼鍥淬€佹偓鐤戣妭濂忋€佹殫榛戣瑙変笌鎯呯华鍖栭暅澶磋瑷€銆?,
     works: [
       {
-        title: "冥币时代 第一集",
+        title: "鍐ュ竵鏃朵唬 绗竴闆?,
         type: "Horror Episode",
         video: releaseMediaUrl("horror-mingbi-ep1.mp4"),
         poster: posterUrl("horror-mingbi-ep1-lite.jpg"),
         posterTime: 25,
       },
       {
-        title: "诡异降临 第二集",
+        title: "璇″紓闄嶄复 绗簩闆?,
         type: "Horror Episode",
         video: releaseMediaUrl("horror-mingbi-ep2.mp4"),
         poster: posterUrl("horror-mingbi-ep2-lite.jpg"),
@@ -85,33 +88,33 @@ const projectGroups = [
     ],
   },
   {
-    category: "漫剧",
+    category: "婕墽",
     label: "Comic Drama",
-    desc: "AI 漫剧分镜、角色一致性、动态镜头与批量化内容生产。",
+    desc: "AI 婕墽鍒嗛暅銆佽鑹蹭竴鑷存€с€佸姩鎬侀暅澶翠笌鎵归噺鍖栧唴瀹圭敓浜с€?,
     works: [
       {
-        title: "剑仙女友 第一集",
+        title: "鍓戜粰濂冲弸 绗竴闆?,
         type: "Comic Drama Episode",
         video: releaseMediaUrl("comic-jianxian-ep1.mp4"),
         poster: posterUrl("comic-jianxian-ep1-lite.jpg"),
         posterTime: 21,
       },
       {
-        title: "剑仙女友 第二集",
+        title: "鍓戜粰濂冲弸 绗簩闆?,
         type: "Comic Drama Episode",
         video: releaseMediaUrl("comic-jianxian-ep2.mp4"),
         poster: posterUrl("comic-jianxian-ep2-lite.jpg"),
         posterTime: 4,
       },
       {
-        title: "剑仙女友 第三集",
+        title: "鍓戜粰濂冲弸 绗笁闆?,
         type: "Comic Drama Preview",
         video: releaseMediaUrl("comic-jianxian-ep3-preview.mp4"),
         poster: posterUrl("comic-jianxian-ep3-preview-lite.jpg"),
         posterTime: 16,
       },
       {
-        title: "火龙飞",
+        title: "鐏緳椋?,
         type: "Comic Drama Short",
         video: releaseMediaUrl("comic-huolongfei-19s.mp4"),
         poster: posterUrl("comic-huolongfei-19s-lite.jpg"),
@@ -122,28 +125,28 @@ const projectGroups = [
 
 const strengths = [
   {
-    title: "AI 产品理解",
-    text: "理解模型能力边界、上下文结构与用户信任机制，能把技术机会转成体验方案。",
+    title: "AI 浜у搧鐞嗚В",
+    text: "鐞嗚В妯″瀷鑳藉姏杈圭晫銆佷笂涓嬫枃缁撴瀯涓庣敤鎴蜂俊浠绘満鍒讹紝鑳芥妸鎶€鏈満浼氳浆鎴愪綋楠屾柟妗堛€?,
   },
   {
-    title: "流程与原型",
-    text: "擅长从需求拆解、用户路径、交互原型到可验证 demo 的快速闭环。",
+    title: "娴佺▼涓庡師鍨?,
+    text: "鎿呴暱浠庨渶姹傛媶瑙ｃ€佺敤鎴疯矾寰勩€佷氦浜掑師鍨嬪埌鍙獙璇?demo 鐨勫揩閫熼棴鐜€?,
   },
   {
-    title: "视觉系统",
-    text: "建立克制而有识别度的界面语言，让 AI 产品不只强大，也清晰、稳定、可信。",
+    title: "瑙嗚绯荤粺",
+    text: "寤虹珛鍏嬪埗鑰屾湁璇嗗埆搴︾殑鐣岄潰璇█锛岃 AI 浜у搧涓嶅彧寮哄ぇ锛屼篃娓呮櫚銆佺ǔ瀹氥€佸彲淇°€?,
   },
   {
-    title: "跨团队协作",
-    text: "能与产品、算法、前端协同，把抽象体验决策落到组件、状态与交付规范。",
+    title: "璺ㄥ洟闃熷崗浣?,
+    text: "鑳戒笌浜у搧銆佺畻娉曘€佸墠绔崗鍚岋紝鎶婃娊璞′綋楠屽喅绛栬惤鍒扮粍浠躲€佺姸鎬佷笌浜や粯瑙勮寖銆?,
   },
 ];
 
 const heroCategories = [
-  { name: "真人", target: "live-action" },
-  { name: "卡通 IP", target: "cartoon-ip" },
-  { name: "恐怖", target: "horror" },
-  { name: "漫剧", target: "comic-drama" },
+  { name: "鐪熶汉", target: "live-action" },
+  { name: "鍗￠€?IP", target: "cartoon-ip" },
+  { name: "鎭愭€?, target: "horror" },
+  { name: "婕墽", target: "comic-drama" },
 ];
 
 function CursorGlow() {
@@ -293,10 +296,11 @@ function PortfolioMotion() {
 }
 
 function App() {
-  const [activeProject, setActiveProject] = React.useState("LPL比赛");
+  const [activeProject, setActiveProject] = React.useState("LPL姣旇禌");
   const [modalProject, setModalProject] = React.useState(null);
   const [loadHeroVideo, setLoadHeroVideo] = React.useState(false);
   const [heroVideoLoaded, setHeroVideoLoaded] = React.useState(false);
+  const [isNavPinned, setIsNavPinned] = React.useState(false);
 
   React.useEffect(() => {
     if (window.location.hash) return undefined;
@@ -354,25 +358,43 @@ function App() {
     };
   }, [modalProject]);
 
+  React.useEffect(() => {
+    const updateNavPinned = () => {
+      const experienceSection = document.getElementById("experience");
+      if (!experienceSection) return;
+
+      setIsNavPinned(experienceSection.getBoundingClientRect().top <= 92);
+    };
+
+    updateNavPinned();
+    window.addEventListener("scroll", updateNavPinned, { passive: true });
+    window.addEventListener("resize", updateNavPinned);
+
+    return () => {
+      window.removeEventListener("scroll", updateNavPinned);
+      window.removeEventListener("resize", updateNavPinned);
+    };
+  }, []);
+
   return (
     <main>
       <CursorGlow />
       <PortfolioMotion />
 
       <section className="hero" id="home">
-        <nav className="nav shell" aria-label="主导航">
+        <nav className={`nav shell ${isNavPinned ? "isPinned" : ""}`} aria-label="涓诲鑸?>
           <a className="brand" href="#home">
             <span className="brandMark" />
             AI Designer
           </a>
           <div className="navLinks">
-            <a href="#experience">经历</a>
-            <a href="#projects">项目</a>
-            <a href="#strengths">优势</a>
-            <a href="#contact">联系</a>
+            <a href="#experience">缁忓巻</a>
+            <a href="#projects">椤圭洰</a>
+            <a href="#strengths">浼樺娍</a>
+            <a href="#contact">鑱旂郴</a>
           </div>
           <a className="contactBtn" href={`mailto:${profile.email}`}>
-            联系我
+            鑱旂郴鎴?
           </a>
         </nav>
 
@@ -410,14 +432,14 @@ function App() {
 
           <div className="heroStatement">
             <p>
-              以产品体验为核心，连接生成式 AI、视觉设计与可执行原型，构建高级、克制且真正可用的智能产品体验。
+              浠ヤ骇鍝佷綋楠屼负鏍稿績锛岃繛鎺ョ敓鎴愬紡 AI銆佽瑙夎璁′笌鍙墽琛屽師鍨嬶紝鏋勫缓楂樼骇銆佸厠鍒朵笖鐪熸鍙敤鐨勬櫤鑳戒骇鍝佷綋楠屻€?
             </p>
             <div className="heroContactBar">
-              <a href={`mailto:${profile.email}`}>预约沟通</a>
+              <a href={`mailto:${profile.email}`}>棰勭害娌熼€?/a>
             </div>
           </div>
 
-          <div className="heroCategoryGrid" aria-label="作品类型">
+          <div className="heroCategoryGrid" aria-label="浣滃搧绫诲瀷">
             {heroCategories.map((item, index) => (
               <a
                 className="heroCategoryCard motionCard"
@@ -436,14 +458,14 @@ function App() {
         <div className="shell experienceShowcase">
           <div className="experienceInfo motionCard">
             <div className="experienceTopline">
-              <span>●○ Lucky 2026</span>
+              <span>鈼忊棆 Lucky 2026</span>
               <span>{profile.email}</span>
             </div>
 
             <div className="experienceHeadline">
-              <span>【</span>
+              <span>銆?/span>
               <strong>{profile.name}</strong>
-              <span>】</span>
+              <span>銆?/span>
             </div>
 
             <p className="experienceLead">{profile.intro}</p>
@@ -462,11 +484,11 @@ function App() {
             <div className="experienceMetrics">
               <div>
                 <strong>12+</strong>
-                <span>AI 产品与概念项目</span>
+                <span>AI 浜у搧涓庢蹇甸」鐩?/span>
               </div>
               <div>
                 <strong>3.8x</strong>
-                <span>原型迭代效率提升</span>
+                <span>鍘熷瀷杩唬鏁堢巼鎻愬崌</span>
               </div>
             </div>
 
@@ -474,9 +496,9 @@ function App() {
           </div>
 
           <div className="experienceVisual motionCard imageReveal">
-            <div className="experienceVisualMeta">体验策略 / 视觉系统 / AI 产品落地</div>
-            <img className="revealImage" src={siteAsset("media/avatar-yousen.jpg")} alt="有森头像" />
-            <div className="experienceCopyright">Copyright 2026 © 有森</div>
+            <div className="experienceVisualMeta">浣撻獙绛栫暐 / 瑙嗚绯荤粺 / AI 浜у搧钀藉湴</div>
+            <img className="revealImage" src={siteAsset("media/avatar-yousen.jpg")} alt="鏈夋．澶村儚" />
+            <div className="experienceCopyright">Copyright 2026 漏 鏈夋．</div>
           </div>
         </div>
       </section>
@@ -487,7 +509,7 @@ function App() {
             <div>
               <span className="sectionLabel">SELECTED WORKS</span>
               <div className="motionTitle">SELECTED WORKS</div>
-              <h2>精选项目</h2>
+              <h2>绮鹃€夐」鐩?/h2>
             </div>
           </div>
           <div className="projectStack">
@@ -556,9 +578,9 @@ function App() {
             <div>
               <span className="sectionLabel">CAPABILITIES</span>
               <div className="motionTitle">CAPABILITIES</div>
-              <h2>个人优势</h2>
+              <h2>涓汉浼樺娍</h2>
             </div>
-            <p>从策略、交互、视觉到原型验证，围绕 AI 产品的真实使用场景建立完整设计链路。</p>
+            <p>浠庣瓥鐣ャ€佷氦浜掋€佽瑙夊埌鍘熷瀷楠岃瘉锛屽洿缁?AI 浜у搧鐨勭湡瀹炰娇鐢ㄥ満鏅缓绔嬪畬鏁磋璁￠摼璺€?/p>
           </div>
 
           <div className="strengthGrid">
@@ -577,8 +599,8 @@ function App() {
         <div className="shell contactInner motionCard">
           <span className="sectionLabel">CONTACT</span>
           <div className="motionTitle">CONTACT</div>
-          <h2>Let’s build the next intelligent experience.</h2>
-          <p>欢迎发送简历补充、项目截图或参考网站，我会继续把这个基础版本打磨成更贴近你个人风格的作品集。</p>
+          <h2>Let鈥檚 build the next intelligent experience.</h2>
+          <p>娆㈣繋鍙戦€佺畝鍘嗚ˉ鍏呫€侀」鐩埅鍥炬垨鍙傝€冪綉绔欙紝鎴戜細缁х画鎶婅繖涓熀纭€鐗堟湰鎵撶（鎴愭洿璐磋繎浣犱釜浜洪鏍肩殑浣滃搧闆嗐€?/p>
           <a className="primaryAction" href={`mailto:${profile.email}`}>
             {profile.email}
           </a>
@@ -623,3 +645,4 @@ function App() {
 }
 
 createRoot(document.getElementById("root")).render(<App />);
+
