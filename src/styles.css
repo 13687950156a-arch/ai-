@@ -1525,6 +1525,7 @@ video {
     height: auto;
     aspect-ratio: 16 / 9;
     margin-top: 0;
+    border-radius: 20px;
   }
 
   .heroVideo,
@@ -1537,7 +1538,8 @@ video {
   }
 
   .heroCategoryGrid {
-    margin-top: 18px;
+    width: min(1000px, calc(100vw - 96px));
+    margin-top: 14px;
   }
 }
 
