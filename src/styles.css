@@ -1509,6 +1509,42 @@ video {
   }
 }
 
+@media (max-height: 920px) and (min-width: 901px) {
+  .heroInner {
+    min-height: auto;
+    padding-top: 88px;
+    padding-bottom: 36px;
+  }
+
+  .hero .eyebrow {
+    display: none;
+  }
+
+  .hero h1 {
+    margin-top: 0;
+    font-size: clamp(38px, 3.2vw, 54px);
+  }
+
+  .heroVideoStage {
+    height: min(34vh, 340px);
+    aspect-ratio: auto;
+    margin-top: 18px;
+  }
+
+  .heroVideo,
+  .heroPoster {
+    object-fit: cover;
+  }
+
+  .heroStatement {
+    margin-top: 18px;
+  }
+
+  .heroCategoryGrid {
+    margin-top: 18px;
+  }
+}
+
 @media (max-width: 900px) {
   .shell,
   .heroVideoStage,
