@@ -374,7 +374,7 @@ function App() {
   }, []);
 
   return (
-    <main>
+    <main className={isNavPinned ? "hasPinnedNav" : ""}>
       <CursorGlow />
       <PortfolioMotion />
 
