@@ -186,6 +186,7 @@ function PortfolioMotion() {
 
         const gsap = gsapModule.default;
         const ScrollTrigger = scrollTriggerModule.ScrollTrigger;
+        const scrollContainer = document.querySelector(".siteScroll");
         gsap.registerPlugin(ScrollTrigger);
 
         context = gsap.context(() => {
@@ -237,7 +238,11 @@ function PortfolioMotion() {
 
             if (title) {
               gsap.from(title, {
-                scrollTrigger: { trigger: section, start: "top 72%" },
+                scrollTrigger: {
+                  trigger: section,
+                  start: "top 72%",
+                  scroller: scrollContainer,
+                },
                 y: 150,
                 autoAlpha: 0,
                 scaleY: 0.66,
@@ -250,7 +255,11 @@ function PortfolioMotion() {
 
             if (cards.length) {
               gsap.from(cards, {
-                scrollTrigger: { trigger: section, start: "top 64%" },
+                scrollTrigger: {
+                  trigger: section,
+                  start: "top 64%",
+                  scroller: scrollContainer,
+                },
                 y: 86,
                 autoAlpha: 0,
                 clipPath: "inset(0 0 22% 0 round 28px)",
@@ -275,10 +284,12 @@ function PortfolioMotion() {
                   start: "top bottom",
                   end: "bottom top",
                   scrub: 0.8,
+                  scroller: scrollContainer,
                 },
               },
             );
           });
+          ScrollTrigger.refresh();
         });
       })
       .catch(() => {});
@@ -297,7 +308,6 @@ function App() {
   const [modalProject, setModalProject] = React.useState(null);
   const [loadHeroVideo, setLoadHeroVideo] = React.useState(false);
   const [heroVideoLoaded, setHeroVideoLoaded] = React.useState(false);
-  const [isNavPinned, setIsNavPinned] = React.useState(false);
 
   React.useEffect(() => {
     if (window.location.hash) return undefined;
@@ -306,8 +316,9 @@ function App() {
     window.history.scrollRestoration = "manual";
     let delayedReset;
     const resetScroll = () => {
-      window.scrollTo(0, 0);
-      delayedReset = window.setTimeout(() => window.scrollTo(0, 0), 120);
+      const scrollContainer = document.querySelector(".siteScroll");
+      scrollContainer?.scrollTo(0, 0);
+      delayedReset = window.setTimeout(() => scrollContainer?.scrollTo(0, 0), 120);
     };
 
     const frame = window.requestAnimationFrame(resetScroll);
@@ -355,31 +366,10 @@ function App() {
     };
   }, [modalProject]);
 
-  React.useEffect(() => {
-    const updateNavPinned = () => {
-      const experienceSection = document.getElementById("experience");
-      if (!experienceSection) return;
-
-      setIsNavPinned(experienceSection.getBoundingClientRect().top <= 92);
-    };
-
-    updateNavPinned();
-    window.addEventListener("scroll", updateNavPinned, { passive: true });
-    window.addEventListener("resize", updateNavPinned);
-
-    return () => {
-      window.removeEventListener("scroll", updateNavPinned);
-      window.removeEventListener("resize", updateNavPinned);
-    };
-  }, []);
-
   return (
-    <main className={isNavPinned ? "hasPinnedNav" : ""}>
-      <CursorGlow />
-      <PortfolioMotion />
-
-      <section className="hero" id="home">
-        <nav className={`nav shell ${isNavPinned ? "isPinned" : ""}`} aria-label="主导航">
+    <div className="siteFrame">
+      <header className="siteHeader">
+        <nav className="nav shell" aria-label="主导航">
           <a className="brand" href="#home">
             <span className="brandMark" />
             AI Designer
@@ -394,6 +384,13 @@ function App() {
             联系我
           </a>
         </nav>
+      </header>
+
+      <main className="siteScroll">
+        <CursorGlow />
+        <PortfolioMotion />
+
+        <section className="hero" id="home">
 
         <div className="heroInner shell">
           <div className="heroTitleBlock">
@@ -449,7 +446,7 @@ function App() {
             ))}
           </div>
         </div>
-      </section>
+        </section>
 
       <section className="experience section motionSection" id="experience">
         <div className="shell experienceShowcase">
@@ -637,7 +634,8 @@ function App() {
           </div>
         </div>
       ) : null}
-    </main>
+      </main>
+    </div>
   );
 }
 
