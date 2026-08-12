@@ -7,7 +7,6 @@ export default defineConfig({
     react(),
     legacy({
       targets: ["defaults", "Chrome >= 49"],
-      modernPolyfills: true,
     }),
   ],
   base: "/ai-/",
