@@ -10,6 +10,7 @@
     "share": "pnpm dlx localtunnel --port 5173"
   },
   "dependencies": {
+    "@vitejs/plugin-legacy": "^6.1.1",
     "@vitejs/plugin-react": "^4.3.4",
     "gsap": "^3.15.0",
     "lucide-react": "^0.468.0",
