@@ -599,7 +599,7 @@ function PortfolioMotion() {
 }
 
 function WorkMarquee({ works, reverse = false }) {
-  const displayedWorks = [...works, ...works, ...works];
+  const displayedWorks = [...works, ...works];
 
   return (
     <div className={`creatorMarqueeViewport ${reverse ? "isReverse" : ""}`} aria-hidden="true">
@@ -627,7 +627,6 @@ function SplitTitle({ children }) {
 }
 
 function App() {
-  const [activeProject, setActiveProject] = React.useState("LPL比赛");
   const [modalProject, setModalProject] = React.useState(null);
   const [loadHeroVideo, setLoadHeroVideo] = React.useState(false);
   const [heroVideoLoaded, setHeroVideoLoaded] = React.useState(false);
@@ -947,7 +946,6 @@ function App() {
                         className="creatorGhostButton"
                         type="button"
                         onClick={() => {
-                          setActiveProject(featuredProject.title);
                           setModalProject(featuredProject);
                         }}
                       >
@@ -962,7 +960,6 @@ function App() {
                           type="button"
                           key={`${project.title}-${project.type}`}
                           onClick={() => {
-                            setActiveProject(project.title);
                             setModalProject(project);
                           }}
                         >
@@ -1021,7 +1018,7 @@ function App() {
           </div>
         </section>
 
-        <div className="legacyLowerContent" aria-hidden="true">
+        {false && <div className="legacyLowerContent" aria-hidden="true">
       <section className="experience section motionSection" id="legacy-experience">
         <div className="shell experienceShowcase">
           <BorderGlow
@@ -1211,7 +1208,7 @@ function App() {
           </a>
         </BorderGlow>
       </section>
-        </div>
+        </div>}
       </div>
 
       {modalProject ? (
