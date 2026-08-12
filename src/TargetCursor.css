@@ -1,0 +1,45 @@
+.targetCursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2147483647;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+
+.targetCursorDot,
+.targetCursorCorner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  box-sizing: border-box;
+}
+
+.targetCursorDot {
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 10px currentColor;
+  transform: translate(-50%, -50%);
+}
+
+.targetCursorCorner {
+  width: 13px;
+  height: 13px;
+  border: 1.5px solid currentColor;
+  filter: drop-shadow(0 0 3px currentColor);
+}
+
+.targetCursorCorner--tl { transform: translate(-150%, -150%); border-right: 0; border-bottom: 0; }
+.targetCursorCorner--tr { transform: translate(50%, -150%); border-left: 0; border-bottom: 0; }
+.targetCursorCorner--br { transform: translate(50%, 50%); border-left: 0; border-top: 0; }
+.targetCursorCorner--bl { transform: translate(-150%, 50%); border-right: 0; border-top: 0; }
+
+@media (pointer: coarse) {
+  .targetCursor { display: none; }
+}
