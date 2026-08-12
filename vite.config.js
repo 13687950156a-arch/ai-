@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import legacy from "@vitejs/plugin-legacy";
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   plugins: [
     react(),
     legacy({
@@ -10,5 +10,8 @@ export default defineConfig({
       modernPolyfills: true,
     }),
   ],
-  base: "/ai-/",
-});
+  base:
+    command === "build"
+      ? "https://yousen-ai-portfolio.oss-cn-hangzhou.aliyuncs.com/site/"
+      : "/ai-/",
+}));
