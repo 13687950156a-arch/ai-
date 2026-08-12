@@ -89,6 +89,8 @@ const BorderGlow = ({
   ...rest
 }) => {
   const cardRef = useRef(null);
+  const pointerFrameRef = useRef(0);
+  const pointerRef = useRef({ x: 0, y: 0 });
 
   const getCenterOfElement = useCallback((element) => {
     const { width, height } = element.getBoundingClientRect();
@@ -126,21 +128,26 @@ const BorderGlow = ({
     (event) => {
       const card = cardRef.current;
       if (!card) return;
-
-      const rect = card.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-      const edge = getEdgeProximity(card, x, y);
-      const angle = getCursorAngle(card, x, y);
-
-      card.classList.add("is-glow-active");
-      card.style.setProperty("--edge-proximity", `${(edge * 100).toFixed(3)}`);
-      card.style.setProperty("--cursor-angle", `${angle.toFixed(3)}deg`);
+      pointerRef.current = { x: event.clientX, y: event.clientY };
+      if (pointerFrameRef.current) return;
+      pointerFrameRef.current = requestAnimationFrame(() => {
+        const rect = card.getBoundingClientRect();
+        const x = pointerRef.current.x - rect.left;
+        const y = pointerRef.current.y - rect.top;
+        const edge = getEdgeProximity(card, x, y);
+        const angle = getCursorAngle(card, x, y);
+        card.classList.add("is-glow-active");
+        card.style.setProperty("--edge-proximity", `${(edge * 100).toFixed(3)}`);
+        card.style.setProperty("--cursor-angle", `${angle.toFixed(3)}deg`);
+        pointerFrameRef.current = 0;
+      });
     },
     [getCursorAngle, getEdgeProximity],
   );
 
   const handlePointerLeave = useCallback(() => {
+    cancelAnimationFrame(pointerFrameRef.current);
+    pointerFrameRef.current = 0;
     cardRef.current?.classList.remove("is-glow-active");
   }, []);
 

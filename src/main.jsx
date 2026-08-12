@@ -171,11 +171,20 @@ const heroCategories = [
 function CursorGlow() {
   React.useEffect(() => {
     const root = document.documentElement;
+    let frameId = 0;
+    let pointerX = 0;
+    let pointerY = 0;
 
     const handlePointerMove = (event) => {
-      root.style.setProperty("--cursor-x", `${event.clientX}px`);
-      root.style.setProperty("--cursor-y", `${event.clientY}px`);
-      root.classList.add("has-cursor");
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      if (frameId) return;
+      frameId = window.requestAnimationFrame(() => {
+        root.style.setProperty("--cursor-x", `${pointerX}px`);
+        root.style.setProperty("--cursor-y", `${pointerY}px`);
+        root.classList.add("has-cursor");
+        frameId = 0;
+      });
     };
 
     const handlePointerLeave = () => {
@@ -575,6 +584,7 @@ function PortfolioMotion() {
       .catch(() => {});
 
     return () => {
+      window.cancelAnimationFrame(frameId);
       disposed = true;
       cleanupProjectTitleScroll();
       cleanupProjectReveals();

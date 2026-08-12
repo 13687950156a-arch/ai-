@@ -167,6 +167,10 @@ const SideRays = ({
       uniforms.iResolution.value = [width * renderer.dpr, height * renderer.dpr];
     };
     const render = (time) => {
+      if (document.hidden) {
+        frameId = requestAnimationFrame(render);
+        return;
+      }
       uniforms.iTime.value = time * 0.001;
       renderer.render({ scene: mesh });
       frameId = requestAnimationFrame(render);

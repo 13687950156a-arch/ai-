@@ -21,6 +21,9 @@ const TargetCursor = ({
     const corners = cornersRef.current;
     let target = null;
     let spin;
+    let frameId = 0;
+    let pointerX = innerWidth / 2;
+    let pointerY = innerHeight / 2;
     const previousCursor = document.body.style.cursor;
     document.body.style.cursor = "none";
 
@@ -41,12 +44,18 @@ const TargetCursor = ({
     };
 
     const move = (event) => {
-      gsap.to(cursor, {
-        x: event.clientX,
-        y: event.clientY,
-        duration: 0.12,
-        ease: "power3.out",
-        overwrite: "auto",
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      if (frameId) return;
+      frameId = window.requestAnimationFrame(() => {
+        gsap.to(cursor, {
+          x: pointerX,
+          y: pointerY,
+          duration: 0.12,
+          ease: "power3.out",
+          overwrite: "auto",
+        });
+        frameId = 0;
       });
     };
 
@@ -79,6 +88,7 @@ const TargetCursor = ({
     window.addEventListener("mouseup", up);
 
     return () => {
+      window.cancelAnimationFrame(frameId);
       spin?.kill();
       document.body.style.cursor = previousCursor;
       window.removeEventListener("mousemove", move);
