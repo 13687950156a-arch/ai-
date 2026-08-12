@@ -9,7 +9,10 @@ const isLocalPreview =
   window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost";
 const assetBase = import.meta.env.BASE_URL;
 const siteAsset = (path) => `${assetBase}${path}`;
-const posterUrl = (fileName) => siteAsset(`posters/${fileName}`);
+const ossSiteBaseUrl = "https://yousen-ai-portfolio.oss-cn-hangzhou.aliyuncs.com/site/";
+const releaseSiteAsset = (path) =>
+  isLocalPreview ? siteAsset(path) : `${ossSiteBaseUrl}${path}`;
+const posterUrl = (fileName) => releaseSiteAsset(`posters/${fileName}`);
 const ossMediaBaseUrl = "https://yousen-ai-portfolio.oss-cn-hangzhou.aliyuncs.com/videos/";
 const releaseMediaUrl = (fileName) =>
   isLocalPreview ? siteAsset(`media/${fileName}`) : `${ossMediaBaseUrl}${fileName}`;
@@ -913,7 +916,7 @@ function App() {
                 </a>
               </div>
               <div className="creatorAboutPortrait">
-                <img src={siteAsset("media/avatar-yousen.jpg")} alt="" loading="lazy" />
+                <img src={releaseSiteAsset("media/avatar-yousen.jpg")} alt="" loading="lazy" />
                 <span>Yousen / 2026</span>
               </div>
             </div>
@@ -1005,7 +1008,7 @@ function App() {
                 ADD WECHAT: yousen1104 <span>&rarr;</span>
               </a>
               <div className="creatorWechatCard">
-                <img src={siteAsset("media/wechat-qr.jpg")} alt="微信二维码" loading="lazy" />
+                <img src={releaseSiteAsset("media/wechat-qr.jpg")} alt="微信二维码" loading="lazy" />
                 <span>扫一扫，直接添加好友。</span>
               </div>
               <a className="creatorContactPhone" href={`tel:${profile.phone}`}>
@@ -1076,7 +1079,7 @@ function App() {
             glowRadius={38}
           >
             <div className="experienceVisualMeta">体验策略 / 视觉系统 / AI 产品落地</div>
-            <img className="revealImage" src={siteAsset("media/avatar-yousen.jpg")} alt="有森头像" />
+            <img className="revealImage" src={releaseSiteAsset("media/avatar-yousen.jpg")} alt="有森头像" />
             <div className="experienceCopyright">Copyright 2026 © 有森</div>
           </BorderGlow>
         </div>
