@@ -9,5 +9,5 @@ export default defineConfig({
       targets: ["defaults", "Chrome >= 49"],
     }),
   ],
-  base: "/ai-/",
+  base: process.env.CF_PAGES ? "/" : "/ai-/",
 });
