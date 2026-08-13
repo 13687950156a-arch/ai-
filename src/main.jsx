@@ -16,6 +16,7 @@ const posterUrl = (fileName) => releaseSiteAsset(`posters/${fileName}`);
 const ossMediaBaseUrl = "https://yousen-ai-portfolio.oss-cn-hangzhou.aliyuncs.com/videos/";
 const releaseMediaUrl = (fileName) =>
   isLocalPreview ? siteAsset(`media/${fileName}`) : `${ossMediaBaseUrl}${fileName}`;
+const is360Browser = /(?:360se|360ee|qihoo|qhbrowser|360chrome)/i.test(navigator.userAgent);
 
 const borderGlowTheme = {
   edgeSensitivity: 30,
@@ -173,6 +174,8 @@ const heroCategories = [
 
 function CursorGlow() {
   React.useEffect(() => {
+    if (is360Browser) return undefined;
+
     const root = document.documentElement;
     let frameId = 0;
     let pointerX = 0;
@@ -688,6 +691,13 @@ function App() {
   const [loadHeroVideo, setLoadHeroVideo] = React.useState(false);
   const [heroVideoLoaded, setHeroVideoLoaded] = React.useState(false);
 
+  React.useEffect(() => {
+    if (!is360Browser) return undefined;
+
+    document.documentElement.classList.add("is360Browser");
+    return () => document.documentElement.classList.remove("is360Browser");
+  }, []);
+
   const handleCategoryNavigate = React.useCallback((event, target) => {
     event.preventDefault();
 
@@ -765,7 +775,7 @@ function App() {
 
   return (
     <>
-    <TargetCursor />
+    {!is360Browser && <TargetCursor />}
     <div className="siteFrame">
       <header className="siteHeader">
         <nav className="nav shell" aria-label="主导航">
@@ -791,7 +801,7 @@ function App() {
         <ViewportPerformance />
 
         <section className="hero" id="home">
-        <SideRays
+        {!is360Browser && <SideRays
           className="heroSideRays"
           speed={0.42}
           rayColor1="#f6be25"
@@ -804,7 +814,7 @@ function App() {
           blend={0.32}
           falloff={2.15}
           opacity={0.34}
-        />
+        />}
 
         <div className="heroInner shell">
           <div className="heroTitleBlock">
