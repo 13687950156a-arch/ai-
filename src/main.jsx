@@ -626,6 +626,63 @@ function SplitTitle({ children }) {
   ));
 }
 
+function ViewportPerformance() {
+  React.useEffect(() => {
+    const scrollRoot = document.querySelector(".siteScroll");
+    if (!scrollRoot || !("IntersectionObserver" in window)) return undefined;
+
+    const sections = Array.from(
+      scrollRoot.querySelectorAll(
+        ".hero, .creatorMarqueeSection, .creatorAbout, .creatorProjects, .creatorServices, .creatorContact",
+      ),
+    );
+
+    const updateVideo = (section, isOffscreen) => {
+      const video = section.querySelector(".heroVideo");
+      if (!video) return;
+
+      if (isOffscreen) {
+        video.pause();
+      } else {
+        video.play().catch(() => {});
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const isOffscreen = !entry.isIntersecting;
+          entry.target.classList.toggle("isOffscreen", isOffscreen);
+          updateVideo(entry.target, isOffscreen);
+        });
+      },
+      { root: scrollRoot, rootMargin: "180px 0px", threshold: 0.01 },
+    );
+
+    sections.forEach((section) => {
+      section.classList.add("viewportManaged");
+      observer.observe(section);
+    });
+
+    const videoObserver = new MutationObserver(() => {
+      sections.forEach((section) => {
+        if (section.classList.contains("isOffscreen")) updateVideo(section, true);
+      });
+    });
+    videoObserver.observe(scrollRoot, { childList: true, subtree: true });
+
+    return () => {
+      observer.disconnect();
+      videoObserver.disconnect();
+      sections.forEach((section) => {
+        section.classList.remove("viewportManaged", "isOffscreen");
+      });
+    };
+  }, []);
+
+  return null;
+}
+
 function App() {
   const [modalProject, setModalProject] = React.useState(null);
   const [loadHeroVideo, setLoadHeroVideo] = React.useState(false);
@@ -731,6 +788,7 @@ function App() {
       <main className="siteScroll">
         <CursorGlow />
         <PortfolioMotion />
+        <ViewportPerformance />
 
         <section className="hero" id="home">
         <SideRays
