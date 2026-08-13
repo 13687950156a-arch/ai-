@@ -2334,8 +2334,7 @@ html.is360Browser .creatorProjectPreview img {
 }
 
 .creatorMarqueeViewport.isReverse .creatorMarqueeTrack {
-  animation-direction: reverse;
-  animation-duration: 66s;
+  animation: creatorMarqueeMoveReverse 66s linear infinite;
 }
 
 .creatorMarqueeViewport:hover .creatorMarqueeTrack {
@@ -2348,6 +2347,15 @@ html.is360Browser .creatorProjectPreview img {
   }
   to {
     transform: translate3d(-33.333%, 0, 0);
+  }
+}
+
+@keyframes creatorMarqueeMoveReverse {
+  from {
+    transform: translate3d(-33.333%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
   }
 }
 
