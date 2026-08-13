@@ -313,7 +313,6 @@ video {
 
 /* Keep invisible continuous effects from using compositor and decode time. */
 .viewportManaged.isOffscreen .heroVideo.isLoaded,
-.viewportManaged.isOffscreen .creatorMarqueeTrack,
 .viewportManaged.isOffscreen .creatorAboutOrb,
 .viewportManaged.isOffscreen .creatorProjectPreview img {
   animation-play-state: paused;
