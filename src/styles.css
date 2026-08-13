@@ -311,6 +311,14 @@ video {
   animation: heroVideoBreathe 10s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
 }
 
+/* Keep invisible continuous effects from using compositor and decode time. */
+.viewportManaged.isOffscreen .heroVideo.isLoaded,
+.viewportManaged.isOffscreen .creatorMarqueeTrack,
+.viewportManaged.isOffscreen .creatorAboutOrb,
+.viewportManaged.isOffscreen .creatorProjectPreview img {
+  animation-play-state: paused;
+}
+
 .heroPlayButton {
   position: absolute;
   z-index: 5;
