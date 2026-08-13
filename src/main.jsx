@@ -18,18 +18,9 @@ const releaseMediaUrl = (fileName) =>
   isLocalPreview ? siteAsset(`media/${fileName}`) : `${ossMediaBaseUrl}${fileName}`;
 const is360Browser = (() => {
   const userAgent = navigator.userAgent;
-  const has360Name = /(?:360se|360ee|qihoo|qhbrowser|360chrome)/i.test(userAgent);
-  const has360Plugin = [...navigator.plugins, ...navigator.mimeTypes].some((plugin) =>
-    /(?:360|qihoo)/i.test(`${plugin.name} ${plugin.description} ${plugin.filename} ${plugin.type}`),
-  );
-  const has360ChromeFeatures = /Chrome/i.test(userAgent) && (
+  return /(?:360se|360ee|qihoo|qhbrowser|360chrome)/i.test(userAgent) ||
     "_360se" in window ||
-    "_360ee" in window ||
-    has360Plugin ||
-    Boolean(window.chrome && !window.chrome.runtime)
-  );
-
-  return has360Name || has360ChromeFeatures;
+    "_360ee" in window;
 })();
 
 const borderGlowTheme = {
