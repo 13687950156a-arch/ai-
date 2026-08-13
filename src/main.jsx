@@ -607,7 +607,8 @@ function PortfolioMotion() {
 }
 
 function WorkMarquee({ works, reverse = false }) {
-  const displayedWorks = [...works, ...works];
+  // Three copies keep the shorter second row continuously filled on wide screens.
+  const displayedWorks = [...works, ...works, ...works];
 
   return (
     <div className={`creatorMarqueeViewport ${reverse ? "isReverse" : ""}`} aria-hidden="true">
