@@ -326,18 +326,6 @@ html.is360Browser .creatorProjectPreview img {
   animation: none;
 }
 
-html.is360Browser .creatorMarqueeTrack {
-  width: 100%;
-  justify-content: center;
-  animation: none;
-  transform: none;
-  will-change: auto;
-}
-
-html.is360Browser .creatorMarqueeTrack .creatorMarqueeCard:nth-child(n + 6) {
-  display: none;
-}
-
 .heroPlayButton {
   position: absolute;
   z-index: 5;
