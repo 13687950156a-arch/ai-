@@ -319,6 +319,17 @@ video {
   animation-play-state: paused;
 }
 
+/* 360's compositor can fail with WebGL, blend layers and infinite transforms together. */
+html.is360Browser .heroVideo.isLoaded,
+html.is360Browser .creatorAboutOrb,
+html.is360Browser .creatorProjectPreview img {
+  animation: none;
+}
+
+html.is360Browser .creatorMarqueeTrack {
+  will-change: auto;
+}
+
 .heroPlayButton {
   position: absolute;
   z-index: 5;
