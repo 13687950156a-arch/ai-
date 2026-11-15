@@ -612,7 +612,7 @@ function WorkMarquee({ works, reverse = false }) {
       <div className="creatorMarqueeTrack">
         {displayedWorks.map((work, index) => (
           <figure className="creatorMarqueeCard" key={`${work.title}-${index}`}>
-            <img src={work.poster} alt="" loading="lazy" />
+            <img src={work.poster} alt="" loading="eager" decoding="async" />
             <figcaption>
               <span>{work.title}</span>
               <small>{work.type}</small>
