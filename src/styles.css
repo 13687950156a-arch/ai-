@@ -3844,6 +3844,153 @@ html.is360Browser .creatorProjectPreview img {
   }
 }
 
+/* Shared mobile typography; display lettering and motion remain independent. */
+@media (max-width: 900px) {
+  :root {
+    --mobile-font-ui: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --mobile-font-display: "Kanit", "Arial Narrow", "Microsoft YaHei", sans-serif;
+    --mobile-type-body: 15px;
+    --mobile-type-heading: 18px;
+    --mobile-type-section: 20px;
+    --mobile-type-meta: 11px;
+    --mobile-ink: #f3f0e8;
+    --mobile-copy: rgba(243, 240, 232, 0.74);
+    --mobile-muted: rgba(243, 240, 232, 0.6);
+  }
+
+  .nav,
+  .hero,
+  .creatorPage,
+  .creatorProjectPreview,
+  .videoModal {
+    font-family: var(--mobile-font-ui);
+    letter-spacing: 0;
+  }
+
+  .hero h1,
+  .creatorAbout h2,
+  .creatorProjects h2,
+  .creatorServices h2,
+  .creatorContact h2,
+  .creatorProjectNumber,
+  .creatorServiceItem > span {
+    font-family: var(--mobile-font-display);
+  }
+
+  .creatorProjectNumber,
+  .creatorServiceItem > span {
+    letter-spacing: 0;
+  }
+
+  .brand,
+  .mobileNav a {
+    font-weight: 600;
+  }
+
+  .mobileNav a {
+    font-size: var(--mobile-type-body);
+  }
+
+  .hero .eyebrow,
+  .creatorSectionKicker,
+  .creatorMarqueeIntro span,
+  .creatorAboutCredentialsLabel,
+  .creatorProjectPanelHeader > div > span {
+    font-size: var(--mobile-type-meta);
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0;
+  }
+
+  .heroCategoryCard span,
+  .heroCategoryCard strong {
+    font-family: var(--mobile-font-ui);
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+
+  .heroStatement p,
+  .creatorAboutCopy p,
+  .creatorAboutMatrix p,
+  .creatorServiceItem p {
+    color: var(--mobile-copy);
+    font-size: var(--mobile-type-body);
+    font-weight: 400;
+    line-height: 1.7;
+    letter-spacing: 0;
+  }
+
+  .creatorAboutLead strong,
+  .creatorAboutLead mark {
+    font-weight: 600;
+  }
+
+  .creatorAboutLead mark {
+    color: var(--mobile-ink);
+  }
+
+  .creatorAboutReplacement > .creatorAboutLead {
+    text-align: left;
+  }
+
+  .creatorCredentialCopy strong,
+  .creatorAboutMatrix strong {
+    color: var(--mobile-ink);
+    font-size: var(--mobile-type-heading);
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0;
+  }
+
+  .creatorProjectPanelHeader h3,
+  .creatorServiceItem h3 {
+    color: var(--mobile-ink);
+    font-size: var(--mobile-type-section);
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0;
+  }
+
+  .creatorAboutMatrix p,
+  .creatorServiceItem p {
+    margin-top: 8px;
+  }
+
+  .creatorCredentialCopy span,
+  .creatorAboutTags,
+  .creatorGradientPill,
+  .creatorContactCard .creatorGradientPill,
+  .creatorGhostButton,
+  .heroPlayButton,
+  .videoModalClose {
+    font-size: var(--mobile-type-meta);
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0;
+  }
+
+  .creatorProjectPlay {
+    font-weight: 600;
+  }
+
+  .creatorContactPhone {
+    color: var(--mobile-ink);
+    font-size: var(--mobile-type-body);
+    font-weight: 500;
+    line-height: 1.7;
+    letter-spacing: 0;
+  }
+
+  .creatorContactEmail,
+  .creatorWechatCard span {
+    color: var(--mobile-muted);
+    font-size: var(--mobile-type-meta);
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .creatorProjects h2,
   .creatorServices h2,
