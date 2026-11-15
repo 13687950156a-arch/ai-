@@ -608,10 +608,17 @@ function WorkMarquee({ works, reverse = false }) {
   const displayedWorks = [...works, ...works, ...works];
 
   return (
-    <div className={`creatorMarqueeViewport ${reverse ? "isReverse" : ""}`} aria-hidden="true">
+    <div
+      className={`creatorMarqueeViewport ${reverse ? "isReverse" : ""}`}
+      style={{ "--marquee-item-count": works.length }}
+      aria-hidden="true"
+    >
       <div className="creatorMarqueeTrack">
         {displayedWorks.map((work, index) => (
-          <figure className="creatorMarqueeCard" key={`${work.title}-${index}`}>
+          <figure
+            className={`creatorMarqueeCard${index >= works.length * 2 ? " isMarqueeExtra" : ""}`}
+            key={`${work.title}-${index}`}
+          >
             <img src={work.poster} alt="" loading="eager" decoding="async" />
             <figcaption>
               <span>{work.title}</span>

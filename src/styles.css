@@ -3432,11 +3432,20 @@ html.is360Browser .creatorProjectPreview img {
   }
 
   .creatorMarqueeCard {
-    flex-basis: min(46vw, 190px);
+    flex: 0 0 var(--marquee-card-width);
+    width: var(--marquee-card-width);
     border-radius: 16px;
+    animation: mobileMarqueeMove 48.333s linear infinite;
+    will-change: transform;
+  }
+
+  .creatorMarqueeCard.isMarqueeExtra {
+    display: none;
   }
 
   .creatorMarqueeViewport {
+    --marquee-card-width: min(46vw, 190px);
+    --marquee-loop-width: calc((var(--marquee-card-width) + 12px) * var(--marquee-item-count));
     --marquee-edge-fade: clamp(28px, 10vw, 56px);
     width: calc(100vw - 32px);
     overflow: hidden;
@@ -3445,13 +3454,32 @@ html.is360Browser .creatorProjectPreview img {
     mask-image: none;
   }
 
-  .creatorMarqueeTrack {
-    animation: creatorMarqueeMove 48.333s linear infinite;
-    will-change: transform;
+  .creatorMarqueeViewport .creatorMarqueeTrack,
+  .creatorMarqueeViewport.isReverse .creatorMarqueeTrack {
+    width: calc(var(--marquee-loop-width) * 2);
+    animation: none;
+    transform: none;
+    will-change: auto;
   }
 
-  .creatorMarqueeViewport.isReverse .creatorMarqueeTrack {
-    animation: creatorMarqueeMoveReverse 55s linear infinite;
+  .creatorMarqueeViewport.isReverse .creatorMarqueeCard {
+    animation-name: mobileMarqueeMoveReverse;
+    animation-duration: 55s;
+  }
+
+  .creatorMarqueeSection.isOffscreen .creatorMarqueeCard {
+    animation-play-state: paused;
+  }
+
+  /* Small moving layers avoid oversized-track compositing failures on mobile. */
+  @keyframes mobileMarqueeMove {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(calc(0px - var(--marquee-loop-width)), 0, 0); }
+  }
+
+  @keyframes mobileMarqueeMoveReverse {
+    from { transform: translate3d(calc(0px - var(--marquee-loop-width)), 0, 0); }
+    to { transform: translate3d(0, 0, 0); }
   }
 
   .creatorAbout {
@@ -3594,16 +3622,38 @@ html.is360Browser .creatorProjectPreview img {
   }
 
   .creatorProjectPanelHeader {
-    grid-template-columns: 72px minmax(0, 1fr);
-    gap: 14px;
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 12px;
   }
 
   .creatorProjectNumber {
-    font-size: 56px;
+    font-size: 44px;
+    letter-spacing: 0;
+  }
+
+  .creatorProjectPanelHeader > div > span {
+    font-size: 10px;
+    letter-spacing: 0;
   }
 
   .creatorProjectPanelHeader h3 {
-    font-size: 25px;
+    margin-top: 6px;
+    font-size: 20px;
+    letter-spacing: 0;
+  }
+
+  .creatorProjectPlay {
+    gap: 6px;
+    padding: 6px 10px 6px 7px;
+    font-size: 8px;
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+
+  .creatorProjectPlay i {
+    width: 16px;
+    height: 16px;
+    font-size: 6px;
   }
 
   .creatorGhostButton {
@@ -3760,6 +3810,8 @@ html.is360Browser .creatorProjectPreview img {
   }
 
   .creatorMarqueeTrack,
+  .creatorMarqueeViewport .creatorMarqueeCard,
+  .creatorMarqueeViewport.isReverse .creatorMarqueeCard,
   .creatorAboutOrb,
   .heroVideo.isLoaded,
   .creatorProjectPreview img {
