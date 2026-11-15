@@ -2489,6 +2489,53 @@ html.is360Browser .creatorProjectPreview img {
   white-space: nowrap;
 }
 
+/* Keep desktop loops on small moving layers instead of an oversized track. */
+@media (min-width: 901px) {
+  .creatorMarqueeViewport {
+    --marquee-card-width: clamp(240px, 27vw, 420px);
+    --marquee-loop-width: calc((var(--marquee-card-width) + 12px) * var(--marquee-item-count));
+  }
+
+  .creatorMarqueeViewport .creatorMarqueeTrack,
+  .creatorMarqueeViewport.isReverse .creatorMarqueeTrack {
+    width: calc(var(--marquee-loop-width) * 2);
+    animation: none;
+    transform: none;
+    will-change: auto;
+  }
+
+  .creatorMarqueeCard {
+    flex: 0 0 var(--marquee-card-width);
+    width: var(--marquee-card-width);
+    animation: desktopMarqueeMove 60.41625s linear infinite;
+    will-change: transform;
+  }
+
+  .creatorMarqueeCard.isMarqueeExtra {
+    display: none;
+  }
+
+  .creatorMarqueeViewport.isReverse .creatorMarqueeCard {
+    animation-name: desktopMarqueeMoveReverse;
+    animation-duration: 68.75s;
+  }
+
+  .creatorMarqueeViewport:hover .creatorMarqueeCard,
+  .creatorMarqueeSection.isOffscreen .creatorMarqueeCard {
+    animation-play-state: paused;
+  }
+
+  @keyframes desktopMarqueeMove {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(calc(0px - var(--marquee-loop-width)), 0, 0); }
+  }
+
+  @keyframes desktopMarqueeMoveReverse {
+    from { transform: translate3d(calc(0px - var(--marquee-loop-width)), 0, 0); }
+    to { transform: translate3d(0, 0, 0); }
+  }
+}
+
 .creatorAbout {
   position: relative;
   display: grid;
