@@ -3414,31 +3414,19 @@ html.is360Browser .creatorProjectPreview img {
   .creatorMarqueeViewport {
     --marquee-edge-fade: clamp(28px, 10vw, 56px);
     width: calc(100vw - 32px);
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x proximity;
-    scrollbar-width: none;
+    overflow: hidden;
+    touch-action: pan-y;
     -webkit-mask-image: none;
     mask-image: none;
   }
 
-  .creatorMarqueeViewport::-webkit-scrollbar {
-    display: none;
+  .creatorMarqueeTrack {
+    animation: creatorMarqueeMove 32s linear infinite;
+    will-change: transform;
   }
 
-  .creatorMarqueeTrack,
   .creatorMarqueeViewport.isReverse .creatorMarqueeTrack {
-    animation: none;
-    will-change: auto;
-  }
-
-  .creatorMarqueeCard {
-    scroll-snap-align: start;
-  }
-
-  .creatorMarqueeViewport:not(.isReverse) .creatorMarqueeCard:nth-child(n + 6),
-  .creatorMarqueeViewport.isReverse .creatorMarqueeCard:nth-child(n + 5) {
-    display: none;
+    animation: creatorMarqueeMoveReverse 36s linear infinite;
   }
 
   .creatorAbout {
