@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import BorderGlow from "./BorderGlow";
 import SideRays from "./SideRays";
 import TargetCursor from "./TargetCursor";
+import { Menu, X } from "lucide-react";
 import "./styles.css";
 
 const isLocalPreview =
@@ -70,6 +71,24 @@ const projectGroups = [
         video: releaseMediaUrl("live-mv.mp4"),
         poster: posterUrl("live-mv-lite.jpg"),
         posterTime: 49,
+      },
+      {
+        title: "《日系MV-白夜》",
+        type: "Music Video",
+        video: releaseMediaUrl("live-white-night.mp4"),
+        poster: posterUrl("live-white-night.png"),
+      },
+      {
+        title: "《月纱的夏天》",
+        type: "Live Action Film",
+        video: releaseMediaUrl("live-moon-gauze-summer.mp4"),
+        poster: posterUrl("live-moon-gauze-summer.png"),
+      },
+      {
+        title: "《また、雪の日に》",
+        type: "Live Action Film",
+        video: releaseMediaUrl("live-snowfall-reunion.mp4"),
+        poster: posterUrl("live-snowfall-reunion.jpg"),
       },
     ],
   },
@@ -223,7 +242,6 @@ function PortfolioMotion() {
     let cleanupProjectTitleScroll = () => {};
     let cleanupProjectReveals = () => {};
     let disposed = false;
-    let hasUserScrolled = false;
 
     Promise.all([import("gsap"), import("gsap/ScrollTrigger")])
       .then(([gsapModule, scrollTriggerModule]) => {
@@ -377,7 +395,7 @@ function PortfolioMotion() {
                 ease: "power4.out",
                 force3D: true,
               }, "-=0.73")
-              .from(".creatorAboutReplacement .creatorAboutMatrix article, .creatorAboutReplacement .creatorAboutTags, .creatorAboutReplacement > .creatorGradientPill", {
+              .from(".creatorAboutCredentials, .creatorAboutReplacement .creatorAboutMatrix article, .creatorAboutReplacement .creatorAboutTags, .creatorAboutReplacement > .creatorGradientPill", {
                 y: 40,
                 autoAlpha: 0,
                 duration: 1.09,
@@ -401,10 +419,11 @@ function PortfolioMotion() {
             )
             .forEach((element) => {
               const isTitle = element.matches("h1, h2, h3, .creatorSectionKicker, .motionTitle");
+              const isServiceHeading = element.matches(".creatorServices h3");
               gsap.from(element, {
                 scrollTrigger: {
-                  trigger: element,
-                  start: "top 86%",
+                  trigger: isServiceHeading ? element.closest(".creatorServiceItem") : element,
+                  start: isServiceHeading ? "top 92%" : "top 86%",
                   scroller: scrollContainer,
                   once: true,
                 },
@@ -515,7 +534,7 @@ function PortfolioMotion() {
             ".creatorProjects h2, .creatorServices h2, .creatorContact h2, .creatorServicesList",
           );
           if (sectionTitles.length) {
-            const titleReveals = sectionTitles.map((title) => gsap.fromTo(title, {
+            const titleReveals = new Map(sectionTitles.map((title) => [title, gsap.fromTo(title, {
               y: 44,
               autoAlpha: 0,
               filter: "blur(12px)",
@@ -527,46 +546,22 @@ function PortfolioMotion() {
               ease: "power3.out",
               force3D: true,
               paused: true,
-            }));
+            })]));
 
-            let hasRevealed = sectionTitles.map(() => false);
-            let lastScrollTop = scrollContainer.scrollTop;
-            const markUserScroll = () => {
-              hasUserScrolled = true;
-            };
-            const revealOnScroll = () => {
-              const currentScrollTop = scrollContainer.scrollTop;
-              if (currentScrollTop === lastScrollTop || !hasUserScrolled) return;
-              lastScrollTop = currentScrollTop;
-              const containerRect = scrollContainer.getBoundingClientRect();
-              const triggerLine = containerRect.top + containerRect.height * 0.78;
-
-              sectionTitles.forEach((title, index) => {
-                if (hasRevealed[index]) return;
-                const titleRect = title.getBoundingClientRect();
-                if (titleRect.top > triggerLine || titleRect.bottom < containerRect.top) return;
-                hasRevealed[index] = true;
-                titleReveals[index].play(0);
+            const titleObserver = new IntersectionObserver((entries) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                titleReveals.get(entry.target)?.play(0);
+                titleObserver.unobserve(entry.target);
               });
+            }, {
+              root: scrollContainer,
+              rootMargin: "0px 0px -18% 0px",
+              threshold: 0,
+            });
 
-              if (hasRevealed.every(Boolean)) {
-                scrollContainer.removeEventListener("scroll", revealOnScroll);
-                scrollContainer.removeEventListener("wheel", markUserScroll);
-                scrollContainer.removeEventListener("touchmove", markUserScroll);
-                scrollContainer.removeEventListener("keydown", markUserScroll);
-              }
-            };
-
-            scrollContainer.addEventListener("scroll", revealOnScroll, { passive: true });
-            scrollContainer.addEventListener("wheel", markUserScroll, { passive: true });
-            scrollContainer.addEventListener("touchmove", markUserScroll, { passive: true });
-            scrollContainer.addEventListener("keydown", markUserScroll);
-            cleanupProjectTitleScroll = () => {
-              scrollContainer.removeEventListener("scroll", revealOnScroll);
-              scrollContainer.removeEventListener("wheel", markUserScroll);
-              scrollContainer.removeEventListener("touchmove", markUserScroll);
-              scrollContainer.removeEventListener("keydown", markUserScroll);
-            };
+            sectionTitles.forEach((title) => titleObserver.observe(title));
+            cleanupProjectTitleScroll = () => titleObserver.disconnect();
           }
 
           gsap.utils.toArray(".revealImage").forEach((image) => {
@@ -696,6 +691,7 @@ function App() {
   const [modalProject, setModalProject] = React.useState(null);
   const [loadHeroVideo, setLoadHeroVideo] = React.useState(false);
   const [heroVideoLoaded, setHeroVideoLoaded] = React.useState(false);
+  const [mobileNavOpen, setMobileNavOpen] = React.useState(false);
 
   React.useEffect(() => {
     if (!is360Browser) return undefined;
@@ -738,6 +734,20 @@ function App() {
   }, []);
 
   React.useEffect(() => {
+    if (!window.location.hash) return undefined;
+    const scrollToInitialSection = () => {
+      const target = decodeURIComponent(window.location.hash.slice(1));
+      document.getElementById(target)?.scrollIntoView({ behavior: "instant", block: "start" });
+    };
+    const frame = window.requestAnimationFrame(scrollToInitialSection);
+    const timer = window.setTimeout(scrollToInitialSection, 180);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(timer);
+    };
+  }, []);
+
+  React.useEffect(() => {
     let timer;
     const loadVideo = () => {
       timer = window.setTimeout(() => setLoadHeroVideo(true), 1600);
@@ -771,6 +781,15 @@ function App() {
     };
   }, [modalProject]);
 
+  React.useEffect(() => {
+    if (!mobileNavOpen) return undefined;
+    const closeOnEscape = (event) => {
+      if (event.key === "Escape") setMobileNavOpen(false);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [mobileNavOpen]);
+
   const reelWorks = projectGroups.flatMap((group) => group.works);
   const heroReel = {
     title: "AI VISUAL SHOWREEL",
@@ -798,7 +817,39 @@ function App() {
           <a className="contactBtn" href={`mailto:${profile.email}`}>
             联系我
           </a>
+          <button
+            className="mobileMenuButton"
+            type="button"
+            aria-label={mobileNavOpen ? "关闭导航" : "打开导航"}
+            aria-expanded={mobileNavOpen}
+            aria-controls="mobileNav"
+            onClick={() => setMobileNavOpen((open) => !open)}
+          >
+            {mobileNavOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </nav>
+        {mobileNavOpen && (
+          <div className="mobileNav" id="mobileNav">
+            {[
+              ["首页", "home"],
+              ["经历", "experience"],
+              ["项目", "projects"],
+              ["优势", "strengths"],
+              ["联系", "contact"],
+            ].map(([label, target]) => (
+              <a
+                href={`#${target}`}
+                key={target}
+                onClick={(event) => {
+                  handleCategoryNavigate(event, target);
+                  setMobileNavOpen(false);
+                }}
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+        )}
       </header>
 
       <main className="siteScroll">
@@ -918,6 +969,14 @@ function App() {
                   <p className="creatorAboutLead">
                     融合 <strong>5年</strong>商业三维美学沉淀，历经 <strong>阿里巴巴</strong> 与顶尖团队 <mark>niaoniao</mark> 核心操盘。精通 <mark>全栈 Gen-AI 视效</mark>，曾主导 <mark>POP MART、LPL、CES 与广交会</mark> 等头部 IP 与国际大展主视觉。
                   </p>
+                  <div className="creatorAboutCredentials" aria-label="平台创作者身份">
+                    <span className="creatorAboutCredentialsLabel">CREATOR AFFILIATIONS / 创作者身份</span>
+                    <ul>
+                      <li><div className="creatorCredentialCopy"><strong>新片场<br />ShotLab</strong><span>签约创作人</span></div></li>
+                      <li><div className="creatorCredentialCopy"><strong>LibTV</strong><span>先锋作者</span></div></li>
+                      <li><div className="creatorCredentialCopy"><strong>TapNow</strong><span>创作者</span></div></li>
+                    </ul>
+                  </div>
                   <div className="creatorAboutMatrix" aria-label="核心能力">
                     <article>
                       <span>01</span>
@@ -1009,6 +1068,7 @@ function App() {
                 <article
                   className="creatorProjectPanel"
                   key={group.category}
+                  id={heroCategories[index]?.target}
                 >
                     <header className="creatorProjectPanelHeader">
                       <span className="creatorProjectNumber">{String(index + 1).padStart(2, "0")}</span>
@@ -1082,9 +1142,11 @@ function App() {
                 <img src={releaseSiteAsset("media/wechat-qr.jpg")} alt="微信二维码" loading="lazy" />
                 <span>扫一扫，直接添加好友。</span>
               </div>
-              <a className="creatorContactPhone" href={`tel:${profile.phone}`}>
-                WECHAT: yousen1104 <span>|</span> TEL: {profile.phone}
-              </a>
+              <div className="creatorContactPhone">
+                <span className="creatorContactWechat">WECHAT: yousen1104</span>
+                <span className="creatorContactDivider" aria-hidden="true">|</span>
+                <a href={`tel:${profile.phone}`}>TEL: {profile.phone}</a>
+              </div>
               <a className="creatorContactEmail" href={`mailto:${profile.email}`}>
                 E-MAIL: {profile.email}
               </a>
