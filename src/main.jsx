@@ -450,6 +450,8 @@ function PortfolioMotion() {
           });
 
           projectPanels.forEach((panel) => {
+            const mobileProjectReveal = window.matchMedia("(max-width: 900px)").matches;
+            const previewRadius = mobileProjectReveal ? "16px" : "46px";
             const headerItems = panel.querySelectorAll(
               ".creatorProjectNumber, .creatorProjectPanelHeader > div, .creatorGhostButton",
             );
@@ -459,16 +461,16 @@ function PortfolioMotion() {
               ".creatorProjectPlay, .creatorProjectTitle",
             );
 
-            gsap.set(panel, { y: 36, autoAlpha: 0, filter: "blur(10px)" });
-            gsap.set(headerItems, { y: 18, autoAlpha: 0, filter: "blur(8px)" });
+            gsap.set(panel, { y: 36, autoAlpha: 0, filter: mobileProjectReveal ? "blur(4px)" : "blur(10px)" });
+            gsap.set(headerItems, { y: 18, autoAlpha: 0, filter: mobileProjectReveal ? "blur(3px)" : "blur(8px)" });
             gsap.set(previews, {
               y: 28,
               autoAlpha: 0,
-              filter: "blur(10px)",
-              clipPath: "inset(5% 0% 0% 0% round 46px)",
+              filter: mobileProjectReveal ? "blur(4px)" : "blur(10px)",
+              clipPath: `inset(5% 0% 0% 0% round ${previewRadius})`,
             });
-            gsap.set(previewImages, { scale: 1.04, yPercent: 1, filter: "blur(4px)" });
-            gsap.set(previewOverlays, { y: 12, autoAlpha: 0, filter: "blur(6px)" });
+            gsap.set(previewImages, { scale: 1.04, yPercent: 1, filter: mobileProjectReveal ? "blur(2px)" : "blur(4px)" });
+            gsap.set(previewOverlays, { y: 12, autoAlpha: 0, filter: mobileProjectReveal ? "blur(3px)" : "blur(6px)" });
 
             const projectTimeline = gsap.timeline({
               paused: true,
@@ -493,7 +495,7 @@ function PortfolioMotion() {
                 y: 0,
                 autoAlpha: 1,
                 filter: "blur(0px)",
-                clipPath: "inset(0% 0% 0% 0% round 46px)",
+                clipPath: `inset(0% 0% 0% 0% round ${previewRadius})`,
                 duration: 0.8,
                 stagger: 0.08,
               }, "-=0.26")
