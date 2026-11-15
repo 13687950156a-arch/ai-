@@ -2189,6 +2189,28 @@ html.is360Browser .creatorProjectPreview img {
 
   .videoModalCaption {
     width: 100%;
+    align-items: baseline;
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  .videoModalCaption span,
+  .videoModalCaption strong {
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0;
+  }
+
+  .videoModalCaption span {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .videoModalCaption strong {
+    min-width: 0;
+    text-align: right;
+    overflow-wrap: anywhere;
   }
 
   .heroCategoryCard.border-glow-card {
@@ -3443,6 +3465,27 @@ html.is360Browser .creatorProjectPreview img {
     display: none;
   }
 
+  .creatorMarqueeCard figcaption {
+    display: block;
+    right: 10px;
+    bottom: 8px;
+    left: 10px;
+  }
+
+  .creatorMarqueeCard figcaption span {
+    display: block;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: 0;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+  }
+
+  .creatorMarqueeCard figcaption small {
+    display: none;
+  }
+
   .creatorMarqueeViewport {
     --marquee-card-width: min(46vw, 190px);
     --marquee-loop-width: calc((var(--marquee-card-width) + 12px) * var(--marquee-item-count));
@@ -3671,10 +3714,13 @@ html.is360Browser .creatorProjectPreview img {
   }
 
   .creatorProjectTitle {
-    right: 14px;
-    bottom: 14px;
-    left: 14px;
-    font-size: 13px;
+    right: 10px;
+    bottom: 10px;
+    left: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: 0;
   }
 
   .creatorContact {
