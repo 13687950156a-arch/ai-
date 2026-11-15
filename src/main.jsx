@@ -972,7 +972,7 @@ function App() {
                   <div className="creatorAboutCredentials" aria-label="平台创作者身份">
                     <span className="creatorAboutCredentialsLabel">CREATOR AFFILIATIONS / 创作者身份</span>
                     <ul>
-                      <li><div className="creatorCredentialCopy"><strong>新片场<br />ShotLab</strong><span>签约创作人</span></div></li>
+                      <li><div className="creatorCredentialCopy"><strong>新片场 ShotLab</strong><span>签约创作人</span></div></li>
                       <li><div className="creatorCredentialCopy"><strong>LibTV</strong><span>先锋作者</span></div></li>
                       <li><div className="creatorCredentialCopy"><strong>TapNow</strong><span>创作者</span></div></li>
                     </ul>
