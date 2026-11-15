@@ -3924,6 +3924,13 @@ html.is360Browser .creatorProjectPreview img {
     font-family: var(--mobile-font-display);
   }
 
+  .creatorProjects h2,
+  .creatorServices h2,
+  .creatorContact h2 {
+    font-weight: 900;
+    font-synthesis: weight;
+  }
+
   .creatorProjectNumber,
   .creatorServiceItem > span {
     letter-spacing: 0;
