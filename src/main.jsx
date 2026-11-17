@@ -14,11 +14,11 @@ const ossSiteBaseUrl = "https://yousen-ai-portfolio.oss-cn-hangzhou.aliyuncs.com
 const releaseSiteAsset = (path) =>
   isLocalPreview ? siteAsset(path) : `${ossSiteBaseUrl}${path}`;
 const posterUrl = (fileName) => releaseSiteAsset(`posters/${fileName}`);
-const getPosterStyle = (scale = 1) => scale === 1 ? undefined : {
+const getPosterStyle = (scale = 1, offsetX = 0) => scale === 1 && offsetX === 0 ? undefined : {
   position: "absolute",
   width: `${scale * 100}%`,
   height: `${scale * 100}%`,
-  left: `${(1 - scale) * 50}%`,
+  left: `${(1 - scale) * 50 + offsetX}%`,
   top: `${(1 - scale) * 50}%`,
   maxWidth: "none",
 };
@@ -117,15 +117,18 @@ const projectGroups = [
         type: "Official Animated Series",
         video: releaseMediaUrl("cartoon-china-coast-guard-ep2.mp4"),
         poster: siteAsset("posters/cartoon-china-coast-guard-ep2.jpg"),
-        posterScale: 1.25,
+        posterScale: 1.375,
+        posterOffsetX: 3,
         posterTime: 0,
       },
       {
         title: "《中国海警》官方科普动画 · 第三集",
         type: "Official Animated Series",
         video: releaseMediaUrl("cartoon-china-coast-guard-ep3.mp4"),
-        poster: siteAsset("posters/cartoon-china-coast-guard-ep3.jpg"),
-        posterTime: 37,
+        poster: siteAsset("posters/cartoon-china-coast-guard-ep3.jpg?v=8s"),
+        posterScale: 1.04,
+        posterOffsetX: -1.8,
+        posterTime: 8,
       },
       {
         title: "《中国海警》官方科普动画 · 第四集",
@@ -642,7 +645,7 @@ function WorkMarquee({ works, reverse = false }) {
             className={`creatorMarqueeCard${index >= works.length * 2 ? " isMarqueeExtra" : ""}`}
             key={`${work.title}-${index}`}
           >
-            <img src={work.poster} alt="" loading="eager" decoding="async" style={getPosterStyle(work.posterScale)} />
+            <img src={work.poster} alt="" loading="eager" decoding="async" style={getPosterStyle(work.posterScale, work.posterOffsetX)} />
             <figcaption>
               <span>{work.title}</span>
               <small>{work.type}</small>
@@ -1129,7 +1132,7 @@ function App() {
                             setModalProject(project);
                           }}
                         >
-                          <img src={project.poster} alt={project.title} loading="lazy" style={getPosterStyle(project.posterScale)} />
+                          <img src={project.poster} alt={project.title} loading="lazy" style={getPosterStyle(project.posterScale, project.posterOffsetX)} />
                           <span className="creatorProjectPlay" aria-hidden="true">
                             <i>▶</i>
                             <b>PLAY SHOWREEL</b>
