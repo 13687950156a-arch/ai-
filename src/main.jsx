@@ -14,6 +14,14 @@ const ossSiteBaseUrl = "https://yousen-ai-portfolio.oss-cn-hangzhou.aliyuncs.com
 const releaseSiteAsset = (path) =>
   isLocalPreview ? siteAsset(path) : `${ossSiteBaseUrl}${path}`;
 const posterUrl = (fileName) => releaseSiteAsset(`posters/${fileName}`);
+const getPosterStyle = (scale = 1) => scale === 1 ? undefined : {
+  position: "absolute",
+  width: `${scale * 100}%`,
+  height: `${scale * 100}%`,
+  left: `${(1 - scale) * 50}%`,
+  top: `${(1 - scale) * 50}%`,
+  maxWidth: "none",
+};
 const ossMediaBaseUrl = "https://yousen-ai-portfolio.oss-cn-hangzhou.aliyuncs.com/videos/";
 const releaseMediaUrl = (fileName) =>
   isLocalPreview ? siteAsset(`media/${fileName}`) : `${ossMediaBaseUrl}${fileName}`;
@@ -105,8 +113,23 @@ const projectGroups = [
         posterTime: 4,
       },
       {
-        title: "《中国海警官方宣传片》",
-        type: "Cartoon IP Film",
+        title: "《中国海警》官方科普动画 · 第二集",
+        type: "Official Animated Series",
+        video: releaseMediaUrl("cartoon-china-coast-guard-ep2.mp4"),
+        poster: siteAsset("posters/cartoon-china-coast-guard-ep2.jpg"),
+        posterScale: 1.25,
+        posterTime: 0,
+      },
+      {
+        title: "《中国海警》官方科普动画 · 第三集",
+        type: "Official Animated Series",
+        video: releaseMediaUrl("cartoon-china-coast-guard-ep3.mp4"),
+        poster: siteAsset("posters/cartoon-china-coast-guard-ep3.jpg"),
+        posterTime: 37,
+      },
+      {
+        title: "《中国海警》官方科普动画 · 第四集",
+        type: "Official Animated Series",
         video: releaseMediaUrl("cartoon-china-coast-guard.mp4"),
         poster: posterUrl("cartoon-china-coast-guard-lite.jpg"),
         posterTime: 18,
@@ -619,7 +642,7 @@ function WorkMarquee({ works, reverse = false }) {
             className={`creatorMarqueeCard${index >= works.length * 2 ? " isMarqueeExtra" : ""}`}
             key={`${work.title}-${index}`}
           >
-            <img src={work.poster} alt="" loading="eager" decoding="async" />
+            <img src={work.poster} alt="" loading="eager" decoding="async" style={getPosterStyle(work.posterScale)} />
             <figcaption>
               <span>{work.title}</span>
               <small>{work.type}</small>
@@ -1106,7 +1129,7 @@ function App() {
                             setModalProject(project);
                           }}
                         >
-                          <img src={project.poster} alt={project.title} loading="lazy" />
+                          <img src={project.poster} alt={project.title} loading="lazy" style={getPosterStyle(project.posterScale)} />
                           <span className="creatorProjectPlay" aria-hidden="true">
                             <i>▶</i>
                             <b>PLAY SHOWREEL</b>
